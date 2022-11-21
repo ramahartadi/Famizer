@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "220501775188",
+    "project_id": "famizer-abc23",
+    "storage_bucket": "famizer-abc23.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:220501775188:android:8f73b3e1efb553500b2ec1",
+        "android_client_info": {
+          "package_name": "com.example.famizer"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "220501775188-dg781dg4j9ae0b7svk2cqu97ikk6423b.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC1kGnmQlp5OMdD_EDi0FMH9rp1e9VNfK4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "220501775188-dg781dg4j9ae0b7svk2cqu97ikk6423b.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
