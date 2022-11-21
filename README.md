@@ -1,3 +1,5 @@
+[![Codemagic build status](https://api.codemagic.io/apps/637afe781063f4281a023d93/637afe781063f4281a023d92/status_badge.svg)](https://codemagic.io/apps/637afe781063f4281a023d93/637afe781063f4281a023d92/latest_build)
+
 # famizer
 
 Capstone Project
