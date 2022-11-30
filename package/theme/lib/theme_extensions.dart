@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:theme/custom_color.g.dart';
 
 extension TypographyUtils on BuildContext {
   ThemeData get theme => Theme.of(this);
@@ -27,4 +28,9 @@ extension TypographyUtils on BuildContext {
 extension ColorSchemeUtils on BuildContext {
   ThemeData get theme => Theme.of(this);
   ColorScheme get colors => theme.colorScheme;
+}
+
+extension CustomColorSchemeUtils on BuildContext {
+  ThemeData get theme => Theme.of(this);
+  CustomColors? get customColors => theme.extension<CustomColors>();
 }
