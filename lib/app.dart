@@ -36,24 +36,6 @@ class FamizerApp extends StatelessWidget {
             colorScheme: darkScheme,
             extensions: [darkCustomColors],
           ),
-          home: Scaffold(
-            appBar: AppBar(
-              title: const Text('Title'),
-            ),
-            body: Column(
-              children: [
-                SizedBox(
-                  width: double.infinity,
-                  height: 100,
-                  child: Text(
-                    'Hello',
-                    style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                        color: Theme.of(context).colorScheme.onBackground),
-                  ),
-                )
-              ],
-            ),
-          ),
         );
       },
     );
