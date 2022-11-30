@@ -3,8 +3,7 @@ import 'package:theme/theme.dart';
 import 'package:dynamic_color/dynamic_color.dart';
 
 class FamizerApp extends StatelessWidget {
-  const FamizerApp({Key? key}) : super(key: key);
-
+  const FamizerApp({super.key});
   @override
   Widget build(BuildContext context) {
     return DynamicColorBuilder(
