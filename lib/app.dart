@@ -3,8 +3,7 @@ import 'package:theme/theme.dart';
 import 'package:dynamic_color/dynamic_color.dart';
 
 class FamizerApp extends StatelessWidget {
-  const FamizerApp({Key? key}) : super(key: key);
-
+  const FamizerApp({super.key});
   @override
   Widget build(BuildContext context) {
     return DynamicColorBuilder(
@@ -35,24 +34,6 @@ class FamizerApp extends StatelessWidget {
             useMaterial3: true,
             colorScheme: darkScheme,
             extensions: [darkCustomColors],
-          ),
-          home: Scaffold(
-            appBar: AppBar(
-              title: const Text('Title'),
-            ),
-            body: Column(
-              children: [
-                SizedBox(
-                  width: double.infinity,
-                  height: 100,
-                  child: Text(
-                    'Hello',
-                    style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                        color: Theme.of(context).colorScheme.onBackground),
-                  ),
-                )
-              ],
-            ),
           ),
         );
       },
