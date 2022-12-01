@@ -73,11 +73,9 @@ class _LoginPageState extends State<LoginPage> {
                   const SizedBox(height: 20),
                   ElevatedButton(
                     onPressed: () {},
-                    style: ButtonStyle(
-                      elevation: const MaterialStatePropertyAll(0),
-                      backgroundColor: MaterialStatePropertyAll<Color>(
-                        context.colors.primary,
-                      ),
+                    style: ElevatedButton.styleFrom(
+                      elevation: 0,
+                      backgroundColor: context.colors.primary,
                     ),
                     child: Text(
                       'Sign in',
