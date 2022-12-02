@@ -66,6 +66,7 @@ class _SettingPageState extends State<SettingPage> {
           ),
           const SizedBox(height: 20),
           ...ListTile.divideTiles(context: context, tiles: [
+            //TODO Hilangkan Opsi ubah email apabila login menggunakan akun google
             Theme(
               data: ThemeData(
                 splashColor: Colors.transparent,
