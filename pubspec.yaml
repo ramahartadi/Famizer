@@ -39,6 +39,8 @@ dependencies:
     path: package/signup
   family_onboarding:
     path: package/family_onboarding
+  settings:
+    path: package/settings
     
 
 
