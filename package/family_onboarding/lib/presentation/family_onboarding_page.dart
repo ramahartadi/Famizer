@@ -13,6 +13,7 @@ class _FamilyOnboardingPageState extends State<FamilyOnboardingPage> {
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
     return Scaffold(
+      backgroundColor: context.colors.background,
       body: Container(
         margin: const EdgeInsets.symmetric(horizontal: 16),
         child: Column(

@@ -1,4 +1,4 @@
-import 'package:family_onboarding/presentation/family_onboarding_page.dart';
+import 'package:family_onboarding/presentation/family_join_page.dart';
 import 'package:flutter/material.dart';
 import 'package:theme/theme.dart';
 import 'package:dynamic_color/dynamic_color.dart';
@@ -36,7 +36,7 @@ class FamizerApp extends StatelessWidget {
             colorScheme: darkScheme,
             extensions: [darkCustomColors],
           ),
-          home: const FamilyOnboardingPage(),
+          home: const FamilyJoinPage(),
         );
       },
     );
