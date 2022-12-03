@@ -151,7 +151,7 @@ class _SettingPageState extends State<SettingPage> {
                       },
                       applicationName: 'Famizer',
                       applicationLegalese:
-                          'Created by capstone team, {{ year }}',
+                          'Created by msib batch 3 capstone team, {{ year }}',
                       applicationDescription: const Text(
                           'Fathur Nor Alif\nRama Destrian Hartadi\nMuhammad Rayi\nQolbi Nurwandi Yunus'),
                       children: const <Widget>[
