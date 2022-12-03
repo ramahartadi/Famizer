@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:theme/theme.dart';
+import 'package:form_builder_validators/form_builder_validators.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -9,6 +10,34 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  late TextEditingController emailController;
+  late TextEditingController passwordController;
+
+  late FocusNode emailFocusNode;
+  late FocusNode passwordFocusNode;
+
+  bool obscurePassword = true;
+
+  @override
+  void initState() {
+    super.initState();
+    emailController = TextEditingController();
+    passwordController = TextEditingController();
+
+    emailFocusNode = FocusNode();
+    passwordFocusNode = FocusNode();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    emailController.dispose();
+    passwordController.dispose();
+
+    emailFocusNode.dispose();
+    passwordFocusNode.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -39,6 +68,8 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                   const SizedBox(height: 20),
                   TextFormField(
+                    controller: emailController,
+                    focusNode: emailFocusNode,
                     textInputAction: TextInputAction.next,
                     decoration: InputDecoration(
                       border: const OutlineInputBorder(),
@@ -49,26 +80,39 @@ class _LoginPageState extends State<LoginPage> {
                           color: context.colors.onSurfaceVariant,
                         ),
                         tooltip: 'Delete',
-                        onPressed: () {},
+                        onPressed: () {
+                          emailController.clear();
+                        },
                       ),
                     ),
+                    autovalidateMode: AutovalidateMode.always,
+                    validator: FormBuilderValidators.email(
+                        errorText: 'Masukan Email yang benar.'),
                   ),
                   const SizedBox(height: 20),
                   TextFormField(
+                    controller: passwordController,
+                    focusNode: passwordFocusNode,
                     textInputAction: TextInputAction.done,
                     decoration: InputDecoration(
                       border: const OutlineInputBorder(),
                       label: const Text('Password'),
                       suffixIcon: IconButton(
                         icon: Icon(
-                          Icons.visibility,
+                          obscurePassword
+                              ? Icons.visibility_outlined
+                              : Icons.visibility_off_outlined,
                           color: context.colors.onSurfaceVariant,
                         ),
                         tooltip: 'Delete',
-                        onPressed: () {},
+                        onPressed: () {
+                          setState(() {
+                            obscurePassword = !obscurePassword;
+                          });
+                        },
                       ),
                     ),
-                    obscureText: true,
+                    obscureText: obscurePassword,
                   ),
                   const SizedBox(height: 20),
                   ElevatedButton(
