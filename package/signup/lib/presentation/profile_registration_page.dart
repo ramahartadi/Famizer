@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:theme/theme.dart';
 
 class ProfileRegistration extends StatefulWidget {
@@ -10,9 +11,23 @@ class ProfileRegistration extends StatefulWidget {
 }
 
 class _ProfileRegistrationState extends State<ProfileRegistration> {
+  late TextEditingController nameController;
+  @override
+  void initState() {
+    super.initState();
+    nameController = TextEditingController();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    nameController.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: context.colors.background,
       body: Container(
         width: double.infinity,
         margin: const EdgeInsets.symmetric(horizontal: 16),
@@ -53,17 +68,21 @@ class _ProfileRegistrationState extends State<ProfileRegistration> {
               ),
             ),
             const SizedBox(height: 20),
-            TextField(
+            TextFormField(
+              controller: nameController,
               textInputAction: TextInputAction.done,
               decoration: InputDecoration(
                 border: const OutlineInputBorder(),
                 label: const Text('Nama'),
                 suffixIcon: IconButton(
                   icon: const Icon(Icons.cancel_outlined),
-                  tooltip: 'Add',
+                  tooltip: 'Hapus',
                   onPressed: () {},
                 ),
               ),
+              autovalidateMode: AutovalidateMode.onUserInteraction,
+              validator: FormBuilderValidators.required(
+                  errorText: 'Bidang ini tidak boleh kosong.'),
             ),
             const SizedBox(height: 20),
             ElevatedButton(

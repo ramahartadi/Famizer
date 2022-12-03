@@ -9,11 +9,45 @@ class SignupPage extends StatefulWidget {
 }
 
 class _SignupPageState extends State<SignupPage> {
-  late final GlobalKey<FormState> _formKey;
+  late GlobalKey<FormState> formKey;
+  late TextEditingController emailController;
+  late TextEditingController passwordController;
+  late TextEditingController confirmPasswordController;
+
+  late FocusNode emailFocusNode;
+  late FocusNode passwordFocusNode;
+  late FocusNode confirmPasswordFocusNode;
+
+  late FocusNode suffixIconFocusNode;
+
+  bool obscurePassword = true;
+  bool obscureConfirmPassword = true;
 
   @override
   void initState() {
-    _formKey = GlobalKey<FormState>();
+    super.initState();
+    formKey = GlobalKey<FormState>();
+    emailController = TextEditingController();
+    passwordController = TextEditingController();
+    confirmPasswordController = TextEditingController();
+
+    emailFocusNode = FocusNode();
+    passwordFocusNode = FocusNode();
+    confirmPasswordFocusNode = FocusNode();
+    suffixIconFocusNode = FocusNode(skipTraversal: true);
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    emailController.dispose();
+    passwordController.dispose();
+    confirmPasswordController.dispose();
+
+    emailFocusNode.dispose();
+    passwordFocusNode.dispose();
+    confirmPasswordFocusNode.dispose();
+    suffixIconFocusNode.dispose();
   }
 
   @override
@@ -35,7 +69,7 @@ class _SignupPageState extends State<SignupPage> {
             ),
             Expanded(
               child: Form(
-                key: _formKey,
+                key: formKey,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -48,11 +82,14 @@ class _SignupPageState extends State<SignupPage> {
                     ),
                     const SizedBox(height: 20),
                     TextFormField(
+                      controller: emailController,
+                      focusNode: emailFocusNode,
                       textInputAction: TextInputAction.next,
                       decoration: InputDecoration(
                         border: const OutlineInputBorder(),
                         label: const Text('Email'),
                         suffixIcon: IconButton(
+                          focusNode: suffixIconFocusNode,
                           icon: Icon(
                             Icons.cancel_outlined,
                             color: context.colors.onSurfaceVariant,
@@ -64,11 +101,14 @@ class _SignupPageState extends State<SignupPage> {
                     ),
                     const SizedBox(height: 20),
                     TextFormField(
-                      textInputAction: TextInputAction.done,
+                      controller: passwordController,
+                      focusNode: passwordFocusNode,
+                      textInputAction: TextInputAction.next,
                       decoration: InputDecoration(
                         border: const OutlineInputBorder(),
                         label: const Text('Password'),
                         suffixIcon: IconButton(
+                          focusNode: suffixIconFocusNode,
                           icon: Icon(
                             Icons.visibility,
                             color: context.colors.onSurfaceVariant,
@@ -81,6 +121,8 @@ class _SignupPageState extends State<SignupPage> {
                     ),
                     const SizedBox(height: 20),
                     TextFormField(
+                      controller: confirmPasswordController,
+                      focusNode: confirmPasswordFocusNode,
                       textInputAction: TextInputAction.done,
                       decoration: InputDecoration(
                         border: const OutlineInputBorder(),
@@ -117,7 +159,7 @@ class _SignupPageState extends State<SignupPage> {
                         ),
                         children: [
                           TextSpan(
-                            text: ' Sign up',
+                            text: ' Sign in',
                             style: context.labelMedium?.copyWith(
                               color: context.colors.primary,
                             ),
@@ -125,7 +167,7 @@ class _SignupPageState extends State<SignupPage> {
                         ],
                       ),
                       textAlign: TextAlign.center,
-                    )
+                    ),
                   ],
                 ),
               ),

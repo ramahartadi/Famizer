@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:signup/presentation/profile_registration_page.dart';
+import 'package:signup/presentation/signup_page.dart';
 import 'package:theme/theme.dart';
 import 'package:dynamic_color/dynamic_color.dart';
 
@@ -36,7 +36,7 @@ class FamizerApp extends StatelessWidget {
             colorScheme: darkScheme,
             extensions: [darkCustomColors],
           ),
-          home: const ProfileRegistration(),
+          home: const SignupPage(),
         );
       },
     );
