@@ -15,6 +15,7 @@ dependencies:
     path: ../theme
   
   flutter_svg: ^1.1.6
+  about: ^2.1.1
 
 dev_dependencies:
   flutter_test:

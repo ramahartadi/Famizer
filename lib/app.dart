@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:settings/presentation/pages/change_email_page.dart';
+import 'package:settings/presentation/pages/setting_page.dart';
 import 'package:theme/theme.dart';
 import 'package:dynamic_color/dynamic_color.dart';
 
@@ -36,7 +36,7 @@ class FamizerApp extends StatelessWidget {
             colorScheme: darkScheme,
             extensions: [darkCustomColors],
           ),
-          home: const ChangeEmailPage(),
+          home: const SettingPage(),
         );
       },
     );

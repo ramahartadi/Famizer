@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:theme/theme.dart';
+import 'package:about/about.dart';
 
 class SettingPage extends StatefulWidget {
   const SettingPage({super.key});
@@ -66,7 +67,7 @@ class _SettingPageState extends State<SettingPage> {
           ),
           const SizedBox(height: 20),
           ...ListTile.divideTiles(context: context, tiles: [
-            //TODO Hilangkan Opsi ubah email apabila login menggunakan akun google
+            //TODO Hilangkan Opsi ubah email dan password apabila login menggunakan akun google
             Theme(
               data: ThemeData(
                 splashColor: Colors.transparent,
@@ -141,7 +142,25 @@ class _SettingPageState extends State<SettingPage> {
                     Icons.chevron_right,
                     color: context.colors.onSurfaceVariant,
                   ),
-                  onTap: () {},
+                  onTap: () {
+                    showAboutPage(
+                      context: context,
+                      values: {
+                        'version': '1.0',
+                        'year': DateTime.now().year.toString(),
+                      },
+                      applicationName: 'Famizer',
+                      applicationLegalese:
+                          'Created by capstone team, {{ year }}',
+                      applicationDescription: const Text(
+                          'Fathur Nor Alif\nRama Destrian Hartadi\nMuhammad Rayi\nQolbi Nurwandi Yunus'),
+                      children: const <Widget>[
+                        LicensesPageListTile(
+                          icon: Icon(Icons.favorite),
+                        ),
+                      ],
+                    );
+                  },
                 ),
               ),
             ),
