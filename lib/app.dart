@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:theme/theme.dart';
 import 'package:dynamic_color/dynamic_color.dart';
+import 'package:todo/presentation/pages/todo_page.dart';
 
 class FamizerApp extends StatelessWidget {
   const FamizerApp({super.key});
@@ -35,6 +36,7 @@ class FamizerApp extends StatelessWidget {
             colorScheme: darkScheme,
             extensions: [darkCustomColors],
           ),
+          home: const TodoPage(),
         );
       },
     );
