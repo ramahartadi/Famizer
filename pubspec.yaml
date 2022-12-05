@@ -35,6 +35,8 @@ dependencies:
     path: package/theme
   login:
     path: package/login
+  signup:
+    path: package/signup
     
 
 
