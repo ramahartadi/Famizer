@@ -13,6 +13,8 @@ dependencies:
     sdk: flutter
   theme:
     path: ../theme 
+  
+  form_builder_validators: ^8.4.0
 
 dev_dependencies:
   flutter_test:
