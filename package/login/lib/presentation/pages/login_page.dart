@@ -1,6 +1,8 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:theme/theme.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
+import 'package:go_router/go_router.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -140,11 +142,14 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                       children: [
                         TextSpan(
-                          text: ' Sign up',
-                          style: context.labelMedium?.copyWith(
-                            color: context.colors.primary,
-                          ),
-                        )
+                            text: ' Sign up',
+                            style: context.labelMedium?.copyWith(
+                              color: context.colors.primary,
+                            ),
+                            recognizer: TapGestureRecognizer()
+                              ..onTap = () {
+                                context.goNamed('signup');
+                              })
                       ],
                     ),
                     textAlign: TextAlign.center,

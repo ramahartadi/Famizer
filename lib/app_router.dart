@@ -15,7 +15,7 @@ class AppRouter {
         },
         routes: [
           GoRoute(
-            path: '/signup',
+            path: 'signup',
             name: 'signup',
             builder: (context, state) {
               return const SignupPage();
