@@ -2,6 +2,7 @@ import 'package:famizer/app_router.dart';
 import 'package:flutter/material.dart';
 import 'package:theme/theme.dart';
 import 'package:dynamic_color/dynamic_color.dart';
+import 'package:home/presentation/pages/home_page.dart';
 
 class FamizerApp extends StatelessWidget {
   const FamizerApp({super.key});
