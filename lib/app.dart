@@ -1,3 +1,4 @@
+import 'package:famizer/app_router.dart';
 import 'package:flutter/material.dart';
 import 'package:theme/theme.dart';
 import 'package:dynamic_color/dynamic_color.dart';
@@ -25,7 +26,7 @@ class FamizerApp extends StatelessWidget {
           darkScheme = darkColorScheme;
         }
 
-        return MaterialApp(
+        return MaterialApp.router(
           theme: ThemeData(
             useMaterial3: true,
             colorScheme: lightScheme,
@@ -36,7 +37,7 @@ class FamizerApp extends StatelessWidget {
             colorScheme: darkScheme,
             extensions: [darkCustomColors],
           ),
-          home: const HomePage(),
+          routerConfig: AppRouter().router,
         );
       },
     );
