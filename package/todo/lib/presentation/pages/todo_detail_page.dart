@@ -17,11 +17,11 @@ class _TodoDetailState extends State<TodoDetailPage> {
   _TodoDetailState({Key? key, required this.todoData});
   final _todoController = TextEditingController();
 
-  List<ToDo> _foundToDo = [];
+  List<ToDo> _foundTodo = [];
 
   @override
   void initState() {
-    _foundToDo = todoData;
+    _foundTodo = todoData;
     super.initState();
   }
 
@@ -73,7 +73,7 @@ class _TodoDetailState extends State<TodoDetailPage> {
           ),
           Expanded(
             child: ListView.builder(
-              itemCount: _foundToDo.length,
+              itemCount: _foundTodo.length,
               padding: const EdgeInsets.symmetric(vertical: 16),
               itemBuilder: (BuildContext context, int index) {
                 return Dismissible(
@@ -86,25 +86,25 @@ class _TodoDetailState extends State<TodoDetailPage> {
                       color: context.colors.onErrorContainer,
                     ),
                   ),
-                  key: ValueKey<ToDo>(_foundToDo[index]),
+                  key: ValueKey<ToDo>(_foundTodo[index]),
                   onDismissed: (DismissDirection direction) {
                     setState(() {
-                      _deleteTodoItem(_foundToDo[index].id!);
+                      _deleteTodoItem(_foundTodo[index].id!);
                     });
                   },
                   child: ListTile(
                     onTap: () {
-                      _handleTodoChange(_foundToDo[index]);
+                      _handleTodoChange(_foundTodo[index]);
                     },
                     contentPadding:
                         EdgeInsets.symmetric(vertical: 4, horizontal: 16),
-                    leading: Icon(_foundToDo[index].isDone
+                    leading: Icon(_foundTodo[index].isDone
                         ? Icons.check_box
                         : Icons.check_box_outline_blank),
                     title: Text(
-                      '${_foundToDo[index].todoText}',
+                      '${_foundTodo[index].todoText}',
                       style: TextStyle(
-                        decoration: _foundToDo[index].isDone
+                        decoration: _foundTodo[index].isDone
                             ? TextDecoration.lineThrough
                             : TextDecoration.none,
                       ),
