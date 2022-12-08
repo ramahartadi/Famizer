@@ -2,6 +2,7 @@ import 'package:go_router/go_router.dart';
 import 'package:home/home.dart';
 import 'package:login/login.dart';
 import 'package:signup/signup.dart';
+import 'package:events/events.dart';
 
 
 class AppRouter {
@@ -27,7 +28,7 @@ class AppRouter {
             path: 'editProfile',
             name: 'editProfile',
             builder: (context, state) {
-              return const EditProfilePage();
+              return  EditProfilePage();
             },
           ),
           GoRoute(
@@ -35,6 +36,13 @@ class AppRouter {
             name: 'home',
             builder: (context, state) {
               return const HomePage();
+            },
+          ),
+          GoRoute(
+            path: 'events',
+            name: 'event',
+            builder: (context, state) {
+              return const EventList();
             },
           ),
         ],
