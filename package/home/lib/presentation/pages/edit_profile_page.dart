@@ -2,28 +2,56 @@ import 'package:flutter/material.dart';
 import 'package:home/model/user.dart';
 import 'package:theme/theme.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:intl/intl.dart';
 
 enum MoodUser { SangatSenang, Senang, BiasaSaja, TidakSenang, Sakit }
 
 class EditProfilePage extends StatefulWidget {
   EditProfilePage({super.key});
-  final userProfile = User.userProfile();
   @override
-  State<EditProfilePage> createState() =>
-      _EditProfilePageState(userProfile: userProfile);
+  State<EditProfilePage> createState() => _EditProfilePageState();
 }
 
 class _EditProfilePageState extends State<EditProfilePage> {
+  TextEditingController namaController = TextEditingController();
+  TextEditingController moodController = TextEditingController();
+  TextEditingController dateController = TextEditingController();
+  TextEditingController statusController = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    namaController.text = userProfile.nama!;
+    moodController.text = userProfile.mood.toString();
+    dateController.text = userProfile.tanggalUlangTaun!;
+    statusController.text = userProfile.status!;
+  }
+
   MoodUser? _moodUser = MoodUser.SangatSenang;
-  final User userProfile;
-  _EditProfilePageState({Key? key, required this.userProfile});
+  _EditProfilePageState({Key? key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Edit profil'),
-        actions: [IconButton(onPressed: () {}, icon: Icon(Icons.check))],
+        actions: [
+          IconButton(
+            icon: Icon(Icons.check),
+            onPressed: () {
+              setState(() {
+                var userEdit = User(
+                    id: userProfile.id,
+                    nama: namaController.text,
+                    status: statusController.text,
+                    tanggalUlangTaun: dateController.text,
+                    mood: moodController.text);
+                userProfile = userEdit;
+              });
+              Navigator.pop(context);
+            },
+          ),
+        ],
       ),
       body: Container(
         margin: const EdgeInsets.symmetric(horizontal: 16),
@@ -62,15 +90,11 @@ class _EditProfilePageState extends State<EditProfilePage> {
                   ))
             ],
           ),
-          // SvgPicture.asset(
-          //   'assets/image/Group 6.svg',
-          //   package: 'home',
-          // ),
           SizedBox(
             height: 20,
           ),
           TextFormField(
-            initialValue: userProfile.nama,
+            controller: namaController,
             textInputAction: TextInputAction.next,
             decoration: InputDecoration(
               border: const OutlineInputBorder(),
@@ -81,7 +105,9 @@ class _EditProfilePageState extends State<EditProfilePage> {
                   color: context.colors.onSurfaceVariant,
                 ),
                 tooltip: 'Delete',
-                onPressed: () {},
+                onPressed: () {
+                  namaController.clear();
+                },
               ),
             ),
           ),
@@ -89,7 +115,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
             height: 20,
           ),
           TextFormField(
-            initialValue: userProfile.tanggalUlangTaun,
+            controller: dateController,
             textInputAction: TextInputAction.next,
             decoration: InputDecoration(
               border: const OutlineInputBorder(),
@@ -100,7 +126,22 @@ class _EditProfilePageState extends State<EditProfilePage> {
                   color: context.colors.onSurfaceVariant,
                 ),
                 tooltip: 'Delete',
-                onPressed: () {},
+                onPressed: () async {
+                  DateTime? pickedDate = await showDatePicker(
+                      context: context,
+                      initialDate: DateTime.now(),
+                      firstDate: DateTime(2000),
+                      lastDate: DateTime(2101));
+                  if (pickedDate != null) {
+                    String formattedDate =
+                        DateFormat("yyyy-MM-dd").format(pickedDate);
+                    setState(() {
+                      dateController.text = formattedDate.toString();
+                    });
+                  } else {
+                    print("Not selected");
+                  }
+                },
               ),
             ),
           ),
@@ -108,7 +149,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
             height: 20,
           ),
           TextFormField(
-            initialValue: userProfile.status,
+            controller: statusController,
             textInputAction: TextInputAction.next,
             decoration: InputDecoration(
               border: const OutlineInputBorder(),
@@ -119,7 +160,9 @@ class _EditProfilePageState extends State<EditProfilePage> {
                   color: context.colors.onSurfaceVariant,
                 ),
                 tooltip: 'Delete',
-                onPressed: () {},
+                onPressed: () {
+                  statusController.clear();
+                },
               ),
             ),
           ),
@@ -127,7 +170,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
             height: 20,
           ),
           TextFormField(
-            initialValue: userProfile.mood.toString(),
+            controller: moodController,
             textInputAction: TextInputAction.next,
             decoration: InputDecoration(
               border: const OutlineInputBorder(),
@@ -168,6 +211,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                                 onChanged: (MoodUser? value) {
                                   setState(() {
                                     _moodUser = value;
+                                    moodController.text = "Sangat Senang";
                                   });
                                 },
                               ),
@@ -186,11 +230,12 @@ class _EditProfilePageState extends State<EditProfilePage> {
                               ]),
                               leading: Container(
                                 child: Radio(
-                                  value: MoodUser.BiasaSaja,
+                                  value: MoodUser.Senang,
                                   groupValue: _moodUser,
                                   onChanged: (MoodUser? value) {
                                     setState(() {
                                       _moodUser = value;
+                                      moodController.text = "Senang";
                                     });
                                   },
                                 ),
@@ -209,11 +254,12 @@ class _EditProfilePageState extends State<EditProfilePage> {
                                 )
                               ]),
                               leading: Radio(
-                                value: MoodUser.TidakSenang,
+                                value: MoodUser.BiasaSaja,
                                 groupValue: _moodUser,
                                 onChanged: (MoodUser? value) {
                                   setState(() {
                                     _moodUser = value;
+                                    moodController.text = "Biasa aja";
                                   });
                                 },
                               ),
@@ -231,11 +277,12 @@ class _EditProfilePageState extends State<EditProfilePage> {
                                 )
                               ]),
                               leading: Radio(
-                                value: MoodUser.Senang,
+                                value: MoodUser.TidakSenang,
                                 groupValue: _moodUser,
                                 onChanged: (MoodUser? value) {
                                   setState(() {
                                     _moodUser = value;
+                                    moodController.text = "Tidak senang";
                                   });
                                 },
                               ),
@@ -258,6 +305,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                                 onChanged: (MoodUser? value) {
                                   setState(() {
                                     _moodUser = value;
+                                    moodController.text = "Sakit";
                                   });
                                 },
                               ),
