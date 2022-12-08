@@ -4,9 +4,12 @@ import 'package:theme/theme.dart';
 import 'package:todo/model/list_tugas.dart';
 import 'package:todo/model/todo.dart';
 import 'package:todo/presentation/pages/todo_detail_page.dart';
+import '../../model/tugas.dart';
 
 class editTodoPage extends StatefulWidget {
-  const editTodoPage({super.key});
+  final int index;
+
+  const editTodoPage({Key? key, required this.index});
 
   @override
   State<editTodoPage> createState() => _editTodoPageState();
@@ -19,6 +22,8 @@ class _editTodoPageState extends State<editTodoPage> {
   @override
   void initState() {
     super.initState();
+    _namaTugasController.text = listTugas[widget.index].name;
+    _deskripsiTugasController.text = listTugas[widget.index].description;
   }
 
   @override
@@ -65,7 +70,15 @@ class _editTodoPageState extends State<editTodoPage> {
         title: const Text('Pengaturan tugas'),
         actions: [
           IconButton(
-              onPressed: () {
+              onPressed: () async {
+                setState(() {
+                  var tugasEdit = Tugas(
+                      listTugas[widget.index].id,
+                      _namaTugasController.text,
+                      _deskripsiTugasController.text,
+                      listTugas[widget.index].todoList);
+                  listTugas[widget.index] = tugasEdit;
+                });
                 Navigator.pop(context);
               },
               icon: Icon(Icons.check))
@@ -78,6 +91,7 @@ class _editTodoPageState extends State<editTodoPage> {
             height: 20,
           ),
           TextFormField(
+            controller: _namaTugasController,
             textInputAction: TextInputAction.next,
             decoration: InputDecoration(
               border: const OutlineInputBorder(),
@@ -96,6 +110,7 @@ class _editTodoPageState extends State<editTodoPage> {
             height: 20,
           ),
           TextFormField(
+            controller: _deskripsiTugasController,
             textInputAction: TextInputAction.next,
             decoration: InputDecoration(
               border: const OutlineInputBorder(),
@@ -232,7 +247,14 @@ class _editTodoPageState extends State<editTodoPage> {
                                     ?.copyWith(color: context.colors.primary)),
                           ),
                           TextButton(
-                            onPressed: () => Navigator.pop(context, 'OK'),
+                            onPressed: () {
+                              setState((() {
+                                listTugas.removeAt(widget.index);
+                              }));
+                              Navigator.pop(context, 'OK');
+                              Navigator.pop(context);
+                              Navigator.pop(context);
+                            },
                             child: Text(
                               'OK',
                               style: context.bodyMedium

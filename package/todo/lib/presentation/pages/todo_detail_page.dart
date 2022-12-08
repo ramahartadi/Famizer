@@ -23,7 +23,6 @@ class _TodoDetailState extends State<TodoDetailPage> {
   final _todoController = TextEditingController();
 
   List<ToDo> _foundTodo = [];
-
   @override
   void initState() {
     _foundTodo = todoData;
@@ -40,7 +39,8 @@ class _TodoDetailState extends State<TodoDetailPage> {
             onPressed: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => const editTodoPage()),
+                MaterialPageRoute(
+                    builder: (context) => editTodoPage(index: index)),
               );
             },
             icon: SvgPicture.asset(
