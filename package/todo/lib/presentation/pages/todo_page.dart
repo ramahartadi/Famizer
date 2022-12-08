@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:theme/theme.dart';
-import 'package:todo/model/todo.dart';
+import '../../model/list_tugas.dart';
 import 'add_todo_page.dart';
 import 'todo_detail_page.dart';
 
@@ -13,13 +13,13 @@ class TodoPage extends StatefulWidget {
 }
 
 class _TodoPageState extends State<TodoPage> {
-  final List<String> entries = <String>['Belanja', 'PR'];
+  // final List<String> entries = <String>['Belanja', 'PR'];
   // final List<String> entries = <String>[];
-  final List<String> entries2 = <String>[
-    'Belanja untuk kebutuhan makan malam acara malam ini',
-    'Tugas rumah yang harus dilakukan'
-  ];
-  final List<String> entries3 = <String>['5', '15'];
+  // final List<String> entries2 = <String>[
+  //   'Belanja untuk kebutuhan makan malam acara malam ini',
+  //   'Tugas rumah yang harus dilakukan'
+  // ];
+  // final List<String> entries3 = <String>['5', '15'];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -30,7 +30,7 @@ class _TodoPageState extends State<TodoPage> {
         ),
         title: Text("Daftar Tugas"),
       ),
-      body: entries.isEmpty
+      body: listTugas.isEmpty
           ? Center(
               child: Container(
                   width: 265,
@@ -58,23 +58,24 @@ class _TodoPageState extends State<TodoPage> {
             )
           : ListView.builder(
               padding: const EdgeInsets.all(16),
-              itemCount: entries.length,
+              itemCount: listTugas.length,
               itemBuilder: (BuildContext context, int index) {
                 return Container(
                   child: Card(
                     color: context.colors.surfaceVariant,
                     child: ListTile(
                       // tileColor: context.colors.surfaceVariant,
-                      title: Text('${entries[index]}',
+                      title: Text('${listTugas[index].name}',
                           style: context.titleMedium
                               ?.copyWith(color: context.colors.onBackground)),
-                      subtitle: Text('${entries2[index]}',
+                      subtitle: Text('${listTugas[index].description}',
                           style: context.bodyMedium?.copyWith(
                               color: context.colors.onSurfaceVariant)),
                       trailing: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Text('${entries3[index]} tugas',
+                          Text(
+                              '${listTugas[index].todoList.length.toString()} tugas',
                               style: context.bodyMedium?.copyWith(
                                   color: context.colors.onSurfaceVariant)),
                         ],
@@ -83,8 +84,13 @@ class _TodoPageState extends State<TodoPage> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => TodoDetailPage()),
-                        );
+                              builder: (context) => TodoDetailPage(
+                                    todosList: listTugas[index].todoList,
+                                    index: index,
+                                  )),
+                        ).then((value) {
+                          setState(() {});
+                        });
                       },
                       isThreeLine: true,
                     ),
@@ -99,7 +105,9 @@ class _TodoPageState extends State<TodoPage> {
             Navigator.push(
               context,
               MaterialPageRoute(builder: (context) => const addTodoPage()),
-            );
+            ).then((value) {
+              setState(() {});
+            });
           },
           child: Icon(
             Icons.add,

@@ -1,11 +1,13 @@
 import 'package:nanoid/nanoid.dart';
 import 'todo.dart';
 
-class todos {
-  String? id;
-  String? name;
-  String? description;
-  String? visibility;
+class Tugas {
+  final String id;
+  final String name;
+  final String description;
+  // final String visibility;
   // List<member> member;
-  List<ToDo>? todoList;
+  final List<ToDo> todoList;
+
+  Tugas(this.id, this.name, this.description, this.todoList);
 }

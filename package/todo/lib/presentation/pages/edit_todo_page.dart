@@ -1,11 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:theme/theme.dart';
+import 'package:todo/model/list_tugas.dart';
 import 'package:todo/model/todo.dart';
 import 'package:todo/presentation/pages/todo_detail_page.dart';
 
-class editTodoPage extends StatelessWidget {
+class editTodoPage extends StatefulWidget {
   const editTodoPage({super.key});
+
+  @override
+  State<editTodoPage> createState() => _editTodoPageState();
+}
+
+class _editTodoPageState extends State<editTodoPage> {
+  TextEditingController _namaTugasController = TextEditingController();
+  TextEditingController _deskripsiTugasController = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {

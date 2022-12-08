@@ -3,18 +3,23 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:theme/theme.dart';
 import 'package:todo/model/todo.dart';
 import 'edit_todo_page.dart';
+import '../../model/list_tugas.dart';
 
 class TodoDetailPage extends StatefulWidget {
-  TodoDetailPage({super.key});
-  final todosList = ToDo.todoList();
+  final List<ToDo> todosList;
+  final int index;
+  TodoDetailPage({Key? key, required this.todosList, required this.index})
+      : super(key: key);
 
   @override
-  State<TodoDetailPage> createState() => _TodoDetailState(todoData: todosList);
+  State<TodoDetailPage> createState() =>
+      _TodoDetailState(todoData: todosList, index: index);
 }
 
 class _TodoDetailState extends State<TodoDetailPage> {
   final List<ToDo> todoData;
-  _TodoDetailState({Key? key, required this.todoData});
+  final int index;
+  _TodoDetailState({Key? key, required this.todoData, required this.index});
   final _todoController = TextEditingController();
 
   List<ToDo> _foundTodo = [];
@@ -29,7 +34,7 @@ class _TodoDetailState extends State<TodoDetailPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Belanja'),
+        title: Text('${listTugas[index].name}'),
         actions: [
           IconButton(
             onPressed: () {

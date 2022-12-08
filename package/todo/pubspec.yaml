@@ -15,6 +15,7 @@ dependencies:
     theme:
         path: ../theme
     go_router: ^5.2.1
+    nanoid: ^1.0.0
 
 dev_dependencies:
     flutter_test:

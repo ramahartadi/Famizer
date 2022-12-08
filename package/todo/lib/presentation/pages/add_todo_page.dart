@@ -1,19 +1,41 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:theme/theme.dart';
+import 'package:todo/model/list_tugas.dart';
 import 'package:todo/model/todo.dart';
+import 'package:todo/model/tugas.dart';
+import 'package:nanoid/nanoid.dart';
 
-class addTodoPage extends StatelessWidget {
+class addTodoPage extends StatefulWidget {
   const addTodoPage({super.key});
 
   @override
+  State<addTodoPage> createState() => _addTodoPageState();
+}
+
+class _addTodoPageState extends State<addTodoPage> {
+  TextEditingController nameController = TextEditingController();
+  TextEditingController descriptionController = TextEditingController();
+
+  @override
   Widget build(BuildContext context) {
+    void initState() {
+      super.initState();
+      nameController.text = "";
+      descriptionController.text = "";
+    }
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Tambah Tugas'),
         actions: [
           IconButton(
-              onPressed: () {
+              onPressed: () async {
+                setState(() {
+                  var tugasAdd = Tugas(nanoid(3), nameController.text,
+                      descriptionController.text, []);
+                  listTugas.add(tugasAdd);
+                });
                 Navigator.pop(context);
               },
               icon: Icon(Icons.check))
@@ -26,6 +48,7 @@ class addTodoPage extends StatelessWidget {
             height: 20,
           ),
           TextFormField(
+            controller: nameController,
             textInputAction: TextInputAction.next,
             decoration: InputDecoration(
               border: const OutlineInputBorder(),
@@ -44,6 +67,7 @@ class addTodoPage extends StatelessWidget {
             height: 20,
           ),
           TextFormField(
+            controller: descriptionController,
             textInputAction: TextInputAction.next,
             decoration: InputDecoration(
               border: const OutlineInputBorder(),
