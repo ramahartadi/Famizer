@@ -1,23 +1,22 @@
-import 'package:home/home.dart';
-
 class User {
-  String? id;
-  String? nama;
-  String? tanggalUlangTaun;
-  String? status;
-  Enum? mood;
+  final String? id;
+  final String? nama;
+  final String? tanggalUlangTaun;
+  final String? status;
+  final String? mood;
 
   User(
       {required this.id,
       required this.nama,
       required this.status,
-      this.mood = MoodUser.SangatSenang});
-
-  static User userProfile() {
-    return User(
-        id: '01',
-        nama: 'Ahmad',
-        status: 'Sedang sibuk',
-        mood: MoodUser.SangatSenang);
-  }
+      required this.tanggalUlangTaun,
+      this.mood = "Sangat Senang"});
 }
+
+var userProfile = User(
+  id: '01',
+  nama: 'Ahmad',
+  status: 'Sedang sibuk',
+  tanggalUlangTaun: '2000-01-01',
+  mood: "Sangat Senang",
+);
