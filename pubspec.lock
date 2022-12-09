@@ -337,7 +337,7 @@ packages:
     source: hosted
     version: "1.8.0"
   nanoid:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: nanoid
       url: "https://pub.dartlang.org"
@@ -450,6 +450,13 @@ packages:
     dependency: "direct main"
     description:
       path: "package/theme"
+      relative: true
+    source: path
+    version: "0.0.1"
+  todo:
+    dependency: "direct main"
+    description:
+      path: "package/todo"
       relative: true
     source: path
     version: "0.0.1"
