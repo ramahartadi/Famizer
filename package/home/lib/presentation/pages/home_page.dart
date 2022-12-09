@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:home/home.dart';
 import 'package:theme/theme.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:go_router/go_router.dart';
 import '../../model/user.dart';
 
 class HomePage extends StatefulWidget {
@@ -20,13 +19,13 @@ class _HomePageState extends State<HomePage> {
         backgroundColor: context.colors.background,
         body: SingleChildScrollView(
           child: Container(
-            padding: EdgeInsets.symmetric(horizontal: 16),
+            padding: const EdgeInsets.symmetric(horizontal: 16),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               children: <Widget>[
                 Container(
                   child: ListTile(
-                      leading: FlutterLogo(size: 40),
+                      leading: const FlutterLogo(size: 40),
                       title: Text(
                         '${userProfile.nama}',
                         style: context.titleSmall
@@ -53,7 +52,7 @@ class _HomePageState extends State<HomePage> {
                             });
                           })),
                 ),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 Card(
                   color: context.colors.primaryContainer,
                   margin: EdgeInsets.zero,
@@ -69,7 +68,7 @@ class _HomePageState extends State<HomePage> {
                           child: Row(
                         children: [
                           Padding(
-                            padding: EdgeInsets.all(16),
+                            padding: const EdgeInsets.all(16),
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
@@ -79,7 +78,7 @@ class _HomePageState extends State<HomePage> {
                                       color: context.colors.onPrimaryContainer),
                                   textAlign: TextAlign.left,
                                 ),
-                                SizedBox(
+                                const SizedBox(
                                   height: 20,
                                 ),
                                 Text(
@@ -132,7 +131,7 @@ class _HomePageState extends State<HomePage> {
                     ),
                   ),
                 ),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 Container(
                     child: Row(
                   children: [
@@ -148,7 +147,7 @@ class _HomePageState extends State<HomePage> {
                           child: SizedBox(
                             height: 150,
                             child: Container(
-                                padding: EdgeInsets.all(16),
+                                padding: const EdgeInsets.all(16),
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
@@ -157,7 +156,7 @@ class _HomePageState extends State<HomePage> {
                                       size: 36,
                                       color: context.colors.tertiary,
                                     ),
-                                    SizedBox(
+                                    const SizedBox(
                                       height: 18,
                                     ),
                                     Text(
@@ -177,7 +176,7 @@ class _HomePageState extends State<HomePage> {
                         ),
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       width: 15,
                     ),
                     Expanded(
@@ -192,7 +191,7 @@ class _HomePageState extends State<HomePage> {
                           child: SizedBox(
                             height: 150,
                             child: Container(
-                                padding: EdgeInsets.all(16),
+                                padding: const EdgeInsets.all(16),
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
@@ -201,7 +200,7 @@ class _HomePageState extends State<HomePage> {
                                       size: 36,
                                       color: context.colors.primary,
                                     ),
-                                    SizedBox(
+                                    const SizedBox(
                                       height: 18,
                                     ),
                                     Text(
@@ -223,7 +222,7 @@ class _HomePageState extends State<HomePage> {
                     ),
                   ],
                 )),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 Container(
                     child: Row(
                   children: [
@@ -239,7 +238,7 @@ class _HomePageState extends State<HomePage> {
                           child: SizedBox(
                             height: 150,
                             child: Container(
-                                padding: EdgeInsets.all(16),
+                                padding: const EdgeInsets.all(16),
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
@@ -248,7 +247,7 @@ class _HomePageState extends State<HomePage> {
                                       size: 36,
                                       color: context.customColors?.green,
                                     ),
-                                    SizedBox(
+                                    const SizedBox(
                                       height: 18,
                                     ),
                                     Text(
@@ -268,7 +267,7 @@ class _HomePageState extends State<HomePage> {
                         ),
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       width: 15,
                     ),
                     Expanded(
@@ -283,7 +282,7 @@ class _HomePageState extends State<HomePage> {
                           child: SizedBox(
                             height: 150,
                             child: Container(
-                                padding: EdgeInsets.all(16),
+                                padding: const EdgeInsets.all(16),
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
@@ -292,7 +291,7 @@ class _HomePageState extends State<HomePage> {
                                       size: 36,
                                       color: context.customColors?.purple,
                                     ),
-                                    SizedBox(
+                                    const SizedBox(
                                       height: 18,
                                     ),
                                     Text(

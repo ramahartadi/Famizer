@@ -88,7 +88,7 @@ class _EventAddState extends State<EventAdd> {
             children: [
               InkWell(
                 child: Card(
-                    margin: EdgeInsets.all(20),
+                    margin: const EdgeInsets.all(20),
                     child: SizedBox(
                       height: 200,
                       width: double.infinity,
