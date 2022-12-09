@@ -33,6 +33,18 @@ dependencies:
         sdk: flutter
     theme:
         path: package/theme
+    login:
+        path: package/login
+    signup:
+        path: package/signup
+    family_onboarding:
+        path: package/family_onboarding
+    settings:
+        path: package/settings
+    home:
+        path: package/home
+    events:
+        path: package/events
     todo:
         path: package/todo
 
