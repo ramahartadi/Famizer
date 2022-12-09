@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:home/home.dart';
 import 'package:theme/theme.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
+import '../../model/user.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -26,12 +28,12 @@ class _HomePageState extends State<HomePage> {
                   child: ListTile(
                       leading: FlutterLogo(size: 40),
                       title: Text(
-                        'Ahmad',
+                        '${userProfile.nama}',
                         style: context.titleSmall
                             ?.copyWith(color: context.colors.onBackground),
                       ),
                       subtitle: Text(
-                        'Sedang sibuk',
+                        '${userProfile.status}',
                         style: context.bodySmall
                             ?.copyWith(color: context.colors.secondary),
                       ),
@@ -42,7 +44,13 @@ class _HomePageState extends State<HomePage> {
                             color: context.colors.onSurfaceVariant,
                           ),
                           onPressed: () {
-                            context.goNamed('editProfile');
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        EditProfilePage())).then((value) {
+                              setState(() {});
+                            });
                           })),
                 ),
                 SizedBox(height: 20),

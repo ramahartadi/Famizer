@@ -3,7 +3,7 @@ import 'package:home/home.dart';
 import 'package:login/login.dart';
 import 'package:signup/signup.dart';
 import 'package:events/events.dart';
-
+import 'package:todo/todo.dart';
 
 class AppRouter {
   late final GoRouter router = GoRouter(
@@ -28,7 +28,7 @@ class AppRouter {
             path: 'editProfile',
             name: 'editProfile',
             builder: (context, state) {
-              return  EditProfilePage();
+              return EditProfilePage();
             },
           ),
           GoRoute(
@@ -45,6 +45,13 @@ class AppRouter {
               return const EventList();
             },
           ),
+          GoRoute(
+            path: 'todo',
+            name: 'todo',
+            builder: (context, state) {
+              return const TodoPage();
+            },
+          )
         ],
       ),
     ],

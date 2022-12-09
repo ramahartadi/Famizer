@@ -53,6 +53,33 @@ dependencies:
   firebase_core: ^2.3.0
   firebase_crashlytics: ^3.0.6
   go_router: ^5.2.1  
+    flutter:
+        sdk: flutter
+    theme:
+        path: package/theme
+    login:
+        path: package/login
+    signup:
+        path: package/signup
+    family_onboarding:
+        path: package/family_onboarding
+    settings:
+        path: package/settings
+    home:
+        path: package/home
+    events:
+        path: package/events
+    todo:
+        path: package/todo
+
+    # The following adds the Cupertino Icons font to your application.
+    # Use with the CupertinoIcons class for iOS style icons.
+    cupertino_icons: ^1.0.2
+    dynamic_color: ^1.5.4
+    firebase_core: ^2.3.0
+    firebase_crashlytics: ^3.0.6
+    go_router: ^5.2.1
+    nanoid: ^1.0.0
 
 dev_dependencies:
     flutter_test:
