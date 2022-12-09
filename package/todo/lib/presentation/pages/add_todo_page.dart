@@ -1,19 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:theme/theme.dart';
-import 'package:todo/model/todo.dart';
 import 'package:todo/model/tugas.dart';
 import 'package:todo/model/list_tugas.dart';
 import 'package:nanoid/nanoid.dart';
 
-class addTodoPage extends StatefulWidget {
-  const addTodoPage({super.key});
+class AddTodoPage extends StatefulWidget {
+  const AddTodoPage({super.key});
 
   @override
-  State<addTodoPage> createState() => _addTodoPageState();
+  State<AddTodoPage> createState() => _AddTodoPageState();
 }
 
-class _addTodoPageState extends State<addTodoPage> {
+class _AddTodoPageState extends State<AddTodoPage> {
   TextEditingController nameController = TextEditingController();
   TextEditingController descriptionController = TextEditingController();
 
@@ -46,13 +44,13 @@ class _addTodoPageState extends State<addTodoPage> {
                 });
                 Navigator.pop(context);
               },
-              icon: Icon(Icons.check))
+              icon: const Icon(Icons.check))
         ],
       ),
       body: Container(
         margin: const EdgeInsets.symmetric(horizontal: 16),
         child: Column(children: [
-          SizedBox(
+          const SizedBox(
             height: 20,
           ),
           TextFormField(
@@ -71,7 +69,7 @@ class _addTodoPageState extends State<addTodoPage> {
               ),
             ),
           ),
-          SizedBox(
+          const SizedBox(
             height: 20,
           ),
           TextFormField(
@@ -90,16 +88,16 @@ class _addTodoPageState extends State<addTodoPage> {
               ),
             ),
           ),
-          SizedBox(
+          const SizedBox(
             height: 20,
           ),
           Card(
             child: ListTile(
-              title: Text('Terlihat untuk:'),
-              subtitle: Text('Here is a second line'),
+              title: const Text('Terlihat untuk:'),
+              subtitle: const Text('Here is a second line'),
               onTap: () {
                 showModalBottomSheet(
-                    shape: RoundedRectangleBorder(
+                    shape: const RoundedRectangleBorder(
                       borderRadius: BorderRadius.only(
                           topRight: Radius.circular(28),
                           topLeft: Radius.circular(28)),
@@ -111,29 +109,29 @@ class _addTodoPageState extends State<addTodoPage> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           mainAxisSize: MainAxisSize.min,
                           children: [
-                            Container(
-                              child: Icon(Icons.drag_handle),
+                            const SizedBox(
                               width: double.infinity,
+                              child: Icon(Icons.drag_handle),
                             ),
-                            Padding(
-                              padding: const EdgeInsets.all(16.0),
+                            const Padding(
+                              padding: EdgeInsets.all(16.0),
                               child: Text('Siapa yang bisa melihat list ini?'),
                             ),
-                            ListTile(
+                            const ListTile(
                               leading: Icon(Icons.lock_outline),
                               title: Text('Hanya saya'),
                             ),
-                            ListTile(
+                            const ListTile(
                               leading: Icon(Icons.group_outlined),
                               title: Text('Semua orang di keluarga ini'),
                             ),
                             ListTile(
-                              leading: Icon(Icons.group_add_outlined),
-                              title: Text('Anggota spesifik'),
+                              leading: const Icon(Icons.group_add_outlined),
+                              title: const Text('Anggota spesifik'),
                               onTap: () => {
                                 Navigator.pop(context),
                                 showModalBottomSheet(
-                                    shape: RoundedRectangleBorder(
+                                    shape: const RoundedRectangleBorder(
                                       borderRadius: BorderRadius.only(
                                           topRight: Radius.circular(28),
                                           topLeft: Radius.circular(28)),
@@ -145,14 +143,13 @@ class _addTodoPageState extends State<addTodoPage> {
                                           crossAxisAlignment:
                                               CrossAxisAlignment.start,
                                           mainAxisSize: MainAxisSize.min,
-                                          children: [
-                                            Container(
-                                              child: Icon(Icons.drag_handle),
+                                          children: const [
+                                            SizedBox(
                                               width: double.infinity,
+                                              child: Icon(Icons.drag_handle),
                                             ),
                                             Padding(
-                                              padding:
-                                                  const EdgeInsets.all(16.0),
+                                              padding: EdgeInsets.all(16.0),
                                               child: Text('Pilih Anggota'),
                                             ),
                                             ListTile(
@@ -174,7 +171,7 @@ class _addTodoPageState extends State<addTodoPage> {
                                     })
                               },
                             ),
-                            SizedBox(
+                            const SizedBox(
                               height: 52,
                             )
                           ],

@@ -18,14 +18,14 @@ class _TodoPageState extends State<TodoPage> {
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
-          icon: Icon(Icons.arrow_back),
+          icon: const Icon(Icons.arrow_back),
           onPressed: () => Navigator.of(context).pop(),
         ),
-        title: Text("Daftar Tugas"),
+        title: const Text("Daftar Tugas"),
       ),
       body: listTugas.isEmpty
           ? Center(
-              child: Container(
+              child: SizedBox(
                   width: 265,
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
@@ -34,7 +34,7 @@ class _TodoPageState extends State<TodoPage> {
                         'assets/image/Group 18.svg',
                         package: 'todo',
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 20,
                       ),
                       Text('Tidak ada daftar tugas',
@@ -58,10 +58,10 @@ class _TodoPageState extends State<TodoPage> {
                     color: context.colors.surfaceVariant,
                     child: ListTile(
                       // tileColor: context.colors.surfaceVariant,
-                      title: Text('${listTugas[index].name}',
+                      title: Text(listTugas[index].name,
                           style: context.titleMedium
                               ?.copyWith(color: context.colors.onBackground)),
-                      subtitle: Text('${listTugas[index].description}',
+                      subtitle: Text(listTugas[index].description,
                           style: context.bodyMedium?.copyWith(
                               color: context.colors.onSurfaceVariant)),
                       trailing: Column(
@@ -91,13 +91,13 @@ class _TodoPageState extends State<TodoPage> {
                 );
               }),
       floatingActionButton: Container(
-        margin: EdgeInsets.only(right: 12, bottom: 52),
+        margin: const EdgeInsets.only(right: 12, bottom: 52),
         child: FloatingActionButton(
           backgroundColor: context.colors.primaryContainer,
           onPressed: () {
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => const addTodoPage()),
+              MaterialPageRoute(builder: (context) => const AddTodoPage()),
             ).then((value) {
               setState(() {});
             });
