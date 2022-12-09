@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:theme/theme.dart';
-import 'package:todo/model/list_tugas.dart';
 import 'package:todo/model/todo.dart';
 import 'package:todo/model/tugas.dart';
+import 'package:todo/model/list_tugas.dart';
 import 'package:nanoid/nanoid.dart';
 
 class addTodoPage extends StatefulWidget {
@@ -18,13 +18,21 @@ class _addTodoPageState extends State<addTodoPage> {
   TextEditingController descriptionController = TextEditingController();
 
   @override
-  Widget build(BuildContext context) {
-    void initState() {
-      super.initState();
-      nameController.text = "";
-      descriptionController.text = "";
-    }
+  void initState() {
+    super.initState();
+    nameController.text = "";
+    descriptionController.text = "";
+  }
 
+  @override
+  void dispose() {
+    super.dispose();
+    nameController.dispose;
+    descriptionController.dispose;
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Tambah Tugas'),
@@ -58,7 +66,7 @@ class _addTodoPageState extends State<addTodoPage> {
                   Icons.cancel_outlined,
                   color: context.colors.onSurfaceVariant,
                 ),
-                tooltip: 'Delete',
+                tooltip: '',
                 onPressed: () {},
               ),
             ),
@@ -77,7 +85,7 @@ class _addTodoPageState extends State<addTodoPage> {
                   Icons.cancel_outlined,
                   color: context.colors.onSurfaceVariant,
                 ),
-                tooltip: 'Delete',
+                tooltip: '',
                 onPressed: () {},
               ),
             ),

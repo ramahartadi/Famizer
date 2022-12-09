@@ -23,10 +23,17 @@ class _TodoDetailState extends State<TodoDetailPage> {
   final _todoController = TextEditingController();
 
   List<ToDo> _foundTodo = [];
+
   @override
   void initState() {
-    _foundTodo = todoData;
     super.initState();
+    _foundTodo = todoData;
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _todoController.dispose();
   }
 
   @override

@@ -13,13 +13,6 @@ class TodoPage extends StatefulWidget {
 }
 
 class _TodoPageState extends State<TodoPage> {
-  // final List<String> entries = <String>['Belanja', 'PR'];
-  // final List<String> entries = <String>[];
-  // final List<String> entries2 = <String>[
-  //   'Belanja untuk kebutuhan makan malam acara malam ini',
-  //   'Tugas rumah yang harus dilakukan'
-  // ];
-  // final List<String> entries3 = <String>['5', '15'];
   @override
   Widget build(BuildContext context) {
     return Scaffold(

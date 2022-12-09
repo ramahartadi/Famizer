@@ -1,4 +1,3 @@
-import 'package:nanoid/nanoid.dart';
 import 'todo.dart';
 
 class Tugas {

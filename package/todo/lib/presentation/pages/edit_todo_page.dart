@@ -27,6 +27,13 @@ class _editTodoPageState extends State<editTodoPage> {
   }
 
   @override
+  void dispose() {
+    super.dispose();
+    _namaTugasController.dispose();
+    _deskripsiTugasController.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
