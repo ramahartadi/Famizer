@@ -225,6 +225,7 @@ class _EventEditState extends State<EventEdit> {
                     Navigator.pop(context);
                     Navigator.pop(context);
                   },
+                  child: Padding(padding: const EdgeInsets.symmetric(horizontal: 20),
                   child: Card(
                     color: context.colors.primary,
                     shape: const RoundedRectangleBorder(
@@ -232,7 +233,7 @@ class _EventEditState extends State<EventEdit> {
                     child: const Center(
                       child: Text("Hapus kegiatan"),
                     ),
-                  ),
+                  ),)
                 ),
               )
             ],
