@@ -3,7 +3,7 @@ import 'package:home/home.dart';
 import 'package:login/login.dart';
 import 'package:signup/signup.dart';
 import 'package:events/events.dart';
-import 'package:todo/presentation/pages/todo_page.dart';
+import 'package:todo/todo.dart';
 
 class AppRouter {
   late final GoRouter router = GoRouter(
