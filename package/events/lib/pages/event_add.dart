@@ -1,7 +1,7 @@
 import 'package:events/pages/list.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:events/pages/event.dart';
+import 'package:events/model/event.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
 import 'package:nanoid/nanoid.dart';
@@ -43,7 +43,6 @@ class _EventAddState extends State<EventAdd> {
     dateController.text = "";
     timeStartController.text = "";
     timeEndController.text = "";
-    
   }
 
   @override

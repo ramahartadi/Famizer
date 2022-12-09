@@ -1,8 +1,8 @@
 import 'package:events/pages/list.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:events/pages/event.dart';
-import 'package:events/pages/event_detail.dart';
+import 'package:events/model/event.dart';
+import 'package:theme/theme.dart';
 
 class EventEdit extends StatefulWidget {
   final String id;
@@ -45,6 +45,16 @@ class _EventEditState extends State<EventEdit> {
   }
 
   @override
+  void dispose() {
+    super.dispose();
+    nameController.dispose();
+    descriptionController.dispose();
+    dateController.dispose();
+    timeStartController.dispose();
+    timeEndController.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
@@ -75,9 +85,10 @@ class _EventEditState extends State<EventEdit> {
           child: Column(
             children: [
               InkWell(
-                child: const Card(
-                    margin: EdgeInsets.all(20),
-                    child: SizedBox(
+                child: Card(
+                  color: context.colors.primaryContainer,
+                    margin: const EdgeInsets.all(20),
+                    child: const SizedBox(
                       height: 200,
                       width: double.infinity,
                       child: Center(
@@ -214,13 +225,15 @@ class _EventEditState extends State<EventEdit> {
                     Navigator.pop(context);
                     Navigator.pop(context);
                   },
-                  child: const Card(
-                    shape: RoundedRectangleBorder(
+                  child: Padding(padding: const EdgeInsets.symmetric(horizontal: 20),
+                  child: Card(
+                    color: context.colors.primary,
+                    shape: const RoundedRectangleBorder(
                         borderRadius: BorderRadius.all(Radius.circular(32))),
-                    child: Center(
+                    child: const Center(
                       child: Text("Hapus kegiatan"),
                     ),
-                  ),
+                  ),)
                 ),
               )
             ],
@@ -228,3 +241,4 @@ class _EventEditState extends State<EventEdit> {
         ));
   }
 }
+
