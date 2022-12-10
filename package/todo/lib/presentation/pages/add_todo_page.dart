@@ -3,14 +3,14 @@ import 'package:theme/theme.dart';
 import 'package:todo/model/tugas.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-class addTodoPage extends StatefulWidget {
-  const addTodoPage({super.key});
+class AddTodoPage extends StatefulWidget {
+  const AddTodoPage({super.key});
 
   @override
-  State<addTodoPage> createState() => _addTodoPageState();
+  State<AddTodoPage> createState() => _AddTodoPageState();
 }
 
-class _addTodoPageState extends State<addTodoPage> {
+class _AddTodoPageState extends State<AddTodoPage> {
   TextEditingController nameController = TextEditingController();
   TextEditingController descriptionController = TextEditingController();
 

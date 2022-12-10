@@ -18,14 +18,18 @@ class _EventListState extends State<EventList> {
     return Scaffold(
       backgroundColor: context.colors.surface,
       appBar: AppBar(
+        iconTheme: IconThemeData(
+              color: Colors.black, //change your color here
+            ),
           title: const Text(
             "Kegiatan",
             style: TextStyle(color: Colors.black),
           ),
           backgroundColor: context.colors.surface),
       floatingActionButton: FloatingActionButton(
+        backgroundColor: context.colors.primaryContainer,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-        child: const Icon(Icons.add),
+        child: Icon(Icons.add,color:context.colors.onPrimaryContainer),
         onPressed: () {
           Navigator.of(context).pushNamed(EventAdd.routeName);
         },
@@ -36,14 +40,21 @@ class _EventListState extends State<EventList> {
                   width: 280,
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
-                    children: const [
+                    children: [
                       CircleAvatar(
+                        backgroundColor: context.colors.primaryContainer,
                         radius: 30,
-                        child: Icon(Icons.event_note, size: 30),
+                        child: const Icon(Icons.event_note, size: 30),
+                      ),
+                      Text(
+                        "Tidak ada kegiatan",
+                        textAlign: TextAlign.center,
+                        style: context.titleMedium?.copyWith(color: context.colors.onBackground)
                       ),
                       Text(
                         "Tambahkan tugas anda dengan menekan tombol di bawah",
                         textAlign: TextAlign.center,
+                        style: context.bodyMedium?.copyWith(color: context.colors.onBackground)
                       )
                     ],
                   )),
@@ -56,7 +67,7 @@ class _EventListState extends State<EventList> {
                       onTap: () {
                         Navigator.of(context).push(MaterialPageRoute(
                             builder: (context) => EventDetail(
-                              id:eventList[index].id,
+                                  id:eventList[index].id,
                                   name: eventList[index].name,
                                   desciption: eventList[index].description,
                                   date: eventList[index].date,
@@ -76,24 +87,25 @@ class _EventListState extends State<EventList> {
                               children: [
                                 Text(
                                   eventList[index].name,
-                                  style: const TextStyle(
-                                    fontSize: 15,
-                                    color: Colors.black,
-                                    fontWeight: FontWeight.bold,
-                                  ),
+                                  style: context.titleMedium?.copyWith(color:context.colors.onBackground),
+                                  
                                 ),
-                                Text(
+                                Row(children: [
+                                  const Icon(Icons.schedule,size: 15),
+                                  const SizedBox(width: 5,),
+                                  Text(
                                   eventList[index].date,
-                                  style: const TextStyle(
-                                    fontSize: 13,
-                                  ),
+                                  style: context.bodySmall?.copyWith(color: context.colors.onSurfaceVariant)
                                 ),
+                                const SizedBox(width: 5,),
+                                  Text("${eventList[index].startHour} - ${eventList[index].endHour}",
+                                  style: context.bodySmall?.copyWith(color: context.colors.onSurfaceVariant)
+
+                                  ),
+                                ],),
                                 Text(
                                   eventList[index].description,
-                                  style: const TextStyle(
-                                    color: Colors.black,
-                                    fontSize: 13,
-                                  ),
+                                  style: context.bodyMedium?.copyWith(color: context.colors.onSurfaceVariant)
                                 ),
                               ],
                             ),

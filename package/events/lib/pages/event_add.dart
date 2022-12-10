@@ -1,7 +1,7 @@
 import 'package:events/pages/list.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:events/pages/event.dart';
+import 'package:events/model/event.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
 import 'package:nanoid/nanoid.dart';
@@ -43,7 +43,6 @@ class _EventAddState extends State<EventAdd> {
     dateController.text = "";
     timeStartController.text = "";
     timeEndController.text = "";
-    
   }
 
   @override
@@ -60,6 +59,9 @@ class _EventAddState extends State<EventAdd> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
+          iconTheme: IconThemeData(
+              color: Colors.black, //change your color here
+            ),
           title: const Text("Tambah Kegiatan"),
           actions: <Widget>[
             IconButton(
@@ -89,7 +91,7 @@ class _EventAddState extends State<EventAdd> {
             children: [
               InkWell(
                 child: Card(
-                    margin: EdgeInsets.all(20),
+                    margin: const EdgeInsets.all(20),
                     child: SizedBox(
                       height: 200,
                       width: double.infinity,
@@ -160,7 +162,7 @@ class _EventAddState extends State<EventAdd> {
                           dateController.text = formattedDate.toString();
                         });
                       } else {
-                        print("Not selected");
+                        debugPrint("Not selected");
                       }
                     }),
               ),

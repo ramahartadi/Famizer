@@ -13,9 +13,16 @@ dependencies:
         sdk: flutter
     theme:
         path: ../theme
+    authentication:
+        path: ../authentication
 
     flutter_svg: ^1.1.6
     form_builder_validators: ^8.4.0
+    firebase_auth: ^4.2.0
+    firebase_core: ^2.4.0
+    flutter_bloc: ^8.1.1
+    equatable: ^2.0.5
+    go_router: 5.0.1
 
 dev_dependencies:
     flutter_test:

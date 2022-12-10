@@ -2,18 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:theme/theme.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-class editTodoPage extends StatefulWidget {
+class EditTodoPage extends StatefulWidget {
   final String Id;
 
-  const editTodoPage({Key? key, required this.Id}) : super(key: key);
+  const EditTodoPage({Key? key, required this.Id}) : super(key: key);
 
   @override
-  State<editTodoPage> createState() => _editTodoPageState(Id: Id);
+  State<EditTodoPage> createState() => _EditTodoPageState(Id: Id);
 }
 
-class _editTodoPageState extends State<editTodoPage> {
+class _EditTodoPageState extends State<EditTodoPage> {
   final String Id;
-  _editTodoPageState({Key? key, required this.Id});
+  _EditTodoPageState({Key? key, required this.Id});
 
   TextEditingController _namaTugasController = TextEditingController();
   TextEditingController _deskripsiTugasController = TextEditingController();
@@ -56,7 +56,7 @@ class _editTodoPageState extends State<editTodoPage> {
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
-            icon: Icon(Icons.arrow_back, color: Colors.black),
+            icon: const Icon(Icons.arrow_back, color: Colors.black),
             onPressed: () => {
                   showDialog(
                       context: context,
@@ -66,7 +66,7 @@ class _editTodoPageState extends State<editTodoPage> {
                             title: Text("Apakah kamu ingin menghapus tugas?",
                                 style: context.titleLarge?.copyWith(
                                     color: context.colors.onSurfaceVariant)),
-                            content: Text(
+                            content: const Text(
                                 "Tugas yang dihapus tidak bisa dikembalikan"),
                             actions: [
                               TextButton(
@@ -104,13 +104,13 @@ class _editTodoPageState extends State<editTodoPage> {
                 });
                 Navigator.pop(context);
               },
-              icon: Icon(Icons.check))
+              icon: const Icon(Icons.check))
         ],
       ),
       body: Container(
         margin: const EdgeInsets.symmetric(horizontal: 16),
         child: Column(children: [
-          SizedBox(
+          const SizedBox(
             height: 20,
           ),
           TextFormField(
@@ -129,7 +129,7 @@ class _editTodoPageState extends State<editTodoPage> {
               ),
             ),
           ),
-          SizedBox(
+          const SizedBox(
             height: 20,
           ),
           TextFormField(
@@ -148,16 +148,16 @@ class _editTodoPageState extends State<editTodoPage> {
               ),
             ),
           ),
-          SizedBox(
+          const SizedBox(
             height: 20,
           ),
           Card(
             child: ListTile(
-              title: Text('Terlihat untuk:'),
-              subtitle: Text('Here is a second line'),
+              title: const Text('Terlihat untuk:'),
+              subtitle: const Text('Here is a second line'),
               onTap: () {
                 showModalBottomSheet(
-                    shape: RoundedRectangleBorder(
+                    shape: const RoundedRectangleBorder(
                       borderRadius: BorderRadius.only(
                           topRight: Radius.circular(28),
                           topLeft: Radius.circular(28)),
@@ -169,29 +169,29 @@ class _editTodoPageState extends State<editTodoPage> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           mainAxisSize: MainAxisSize.min,
                           children: [
-                            Container(
-                              child: Icon(Icons.drag_handle),
+                            const SizedBox(
                               width: double.infinity,
+                              child: Icon(Icons.drag_handle),
                             ),
-                            Padding(
-                              padding: const EdgeInsets.all(16.0),
+                            const Padding(
+                              padding: EdgeInsets.all(16.0),
                               child: Text('Siapa yang bisa melihat list ini?'),
                             ),
-                            ListTile(
+                            const ListTile(
                               leading: Icon(Icons.lock_outline),
                               title: Text('Hanya saya'),
                             ),
-                            ListTile(
+                            const ListTile(
                               leading: Icon(Icons.group_outlined),
                               title: Text('Semua orang di keluarga ini'),
                             ),
                             ListTile(
-                              leading: Icon(Icons.group_add_outlined),
-                              title: Text('Anggota spesifik'),
+                              leading: const Icon(Icons.group_add_outlined),
+                              title: const Text('Anggota spesifik'),
                               onTap: () => {
                                 Navigator.pop(context),
                                 showModalBottomSheet(
-                                    shape: RoundedRectangleBorder(
+                                    shape: const RoundedRectangleBorder(
                                       borderRadius: BorderRadius.only(
                                           topRight: Radius.circular(28),
                                           topLeft: Radius.circular(28)),
@@ -203,14 +203,13 @@ class _editTodoPageState extends State<editTodoPage> {
                                           crossAxisAlignment:
                                               CrossAxisAlignment.start,
                                           mainAxisSize: MainAxisSize.min,
-                                          children: [
-                                            Container(
-                                              child: Icon(Icons.drag_handle),
+                                          children: const [
+                                            SizedBox(
                                               width: double.infinity,
+                                              child: Icon(Icons.drag_handle),
                                             ),
                                             Padding(
-                                              padding:
-                                                  const EdgeInsets.all(16.0),
+                                              padding: EdgeInsets.all(16.0),
                                               child: Text('Pilih Anggota'),
                                             ),
                                             ListTile(
@@ -232,7 +231,7 @@ class _editTodoPageState extends State<editTodoPage> {
                                     })
                               },
                             ),
-                            SizedBox(
+                            const SizedBox(
                               height: 52,
                             )
                           ],
@@ -242,14 +241,14 @@ class _editTodoPageState extends State<editTodoPage> {
               },
             ),
           ),
-          SizedBox(
+          const SizedBox(
             height: 20,
           ),
           ElevatedButton(
             style: ElevatedButton.styleFrom(
               foregroundColor: Theme.of(context).colorScheme.onPrimary,
               backgroundColor: context.colors.primary,
-              minimumSize: Size.fromHeight(40),
+              minimumSize: const Size.fromHeight(40),
             ).copyWith(elevation: ButtonStyleButton.allOrNull(0.0)),
             onPressed: () {
               showDialog(
@@ -260,8 +259,8 @@ class _editTodoPageState extends State<editTodoPage> {
                         title: Text("Apakah kamu ingin menghapus tugas?",
                             style: context.titleLarge?.copyWith(
                                 color: context.colors.onSurfaceVariant)),
-                        content:
-                            Text("Tugas yang dihapus tidak bisa dikembalikan"),
+                        content: const Text(
+                            "Tugas yang dihapus tidak bisa dikembalikan"),
                         actions: [
                           TextButton(
                             onPressed: () => Navigator.pop(context, 'Cancel'),

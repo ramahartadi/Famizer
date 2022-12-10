@@ -1,7 +1,8 @@
-import 'package:events/pages/chat.dart';
+import 'package:events/model/chat.dart';
 import 'package:flutter/material.dart';
 import "package:events/pages/event_edit.dart";
 import 'package:events/pages/chat_list.dart';
+import 'package:theme/theme.dart';
 
 class EventDetail extends StatefulWidget {
   final String id;
@@ -39,7 +40,7 @@ class _EventDetailState extends State<EventDetail> {
     super.dispose();
     chat.dispose();
   }
-  
+
   void clearText() {
     chat.clear();
   }
@@ -50,6 +51,9 @@ class _EventDetailState extends State<EventDetail> {
         length: 2,
         child: Scaffold(
           appBar: AppBar(
+            iconTheme: IconThemeData(
+              color: Colors.black, //change your color here
+            ),
             title: const Text("Family Trip"),
             actions: <Widget>[
               IconButton(
@@ -60,7 +64,7 @@ class _EventDetailState extends State<EventDetail> {
                 onPressed: () {
                   Navigator.of(context).push(MaterialPageRoute(
                       builder: (context) => EventEdit(
-                        id:widget.id,
+                            id: widget.id,
                             name: widget.name,
                             desciption: widget.desciption,
                             date: widget.date,
@@ -82,36 +86,45 @@ class _EventDetailState extends State<EventDetail> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Card(
-                      margin: const EdgeInsets.all(20),
-                      child: Container(
+                  const Card(
+                      margin: EdgeInsets.all(20),
+                      child: SizedBox(
                         height: 200,
                         width: double.infinity,
-                        child: const Center(
+                        child: Center(
                           child: Text(''),
                         ),
                       )),
                   const SizedBox(height: 5),
                   Row(
                     children: [
-                      SizedBox(width: 10),
-                      Text(widget.name),
+                      const SizedBox(width: 10),
+                      Text(widget.name, style: context.headlineSmall),
                     ],
                   ),
                   const SizedBox(height: 10),
                   Row(
                     children: [
-                      SizedBox(width: 5),
-                      Icon(Icons.schedule),
-                      SizedBox(width: 5),
-                      Text(widget.date),
-                      SizedBox(width: 5),
-                      Text("${widget.timeStart} - ${widget.timeEnd}")
+                      const SizedBox(width: 5),
+                      const Icon(Icons.schedule),
+                      const SizedBox(width: 5),
+                      Text(widget.date,
+                          style: context.bodySmall?.copyWith(
+                              color: context.colors.onSurfaceVariant)),
+                      const SizedBox(width: 5),
+                      Text("${widget.timeStart} - ${widget.timeEnd}",
+                          style: context.bodySmall?.copyWith(
+                              color: context.colors.onSurfaceVariant))
                     ],
                   ),
                   const SizedBox(height: 10),
                   Row(
-                    children: [SizedBox(width: 10), Text(widget.desciption)],
+                    children: [
+                      const SizedBox(width: 10),
+                      Text(widget.desciption,
+                          style: context.bodyLarge
+                              ?.copyWith(color: context.colors.onBackground))
+                    ],
                   )
                 ],
               ),
@@ -121,12 +134,11 @@ class _EventDetailState extends State<EventDetail> {
                 ListView.builder(
                   itemCount: messages.length,
                   shrinkWrap: true,
-                  padding: EdgeInsets.only(top: 10, bottom: 10),
-                  physics: NeverScrollableScrollPhysics(),
+                  padding: const EdgeInsets.only(top: 10, bottom: 10),
                   itemBuilder: (context, index) {
                     return SingleChildScrollView(
                       child: Container(
-                        padding: EdgeInsets.only(
+                        padding: const EdgeInsets.only(
                             left: 14, right: 14, top: 10, bottom: 10),
                         child: Align(
                           alignment: (messages[index].messageType == "receiver"
@@ -134,15 +146,13 @@ class _EventDetailState extends State<EventDetail> {
                               : Alignment.topRight),
                           child: Container(
                             decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(20),
-                              color: (messages[index].messageType == "receiver"
-                                  ? Colors.grey.shade200
-                                  : Colors.blue[200]),
-                            ),
-                            padding: EdgeInsets.all(16),
+                                borderRadius: BorderRadius.circular(20),
+                                color: context.colors.surfaceVariant),
+                            padding: const EdgeInsets.all(16),
                             child: Text(
                               messages[index].messageContent,
-                              style: TextStyle(fontSize: 15),
+                              style: context.bodyMedium
+                                  ?.copyWith(color: context.colors.onSurface),
                             ),
                           ),
                         ),
@@ -153,13 +163,14 @@ class _EventDetailState extends State<EventDetail> {
                 Align(
                   alignment: Alignment.bottomLeft,
                   child: Container(
-                    padding: EdgeInsets.only(left: 10, bottom: 10, top: 10),
+                    padding:
+                        const EdgeInsets.only(left: 10, bottom: 10, top: 10),
                     height: 60,
                     width: double.infinity,
                     color: Colors.white,
                     child: Row(
                       children: <Widget>[
-                        SizedBox(
+                        const SizedBox(
                           width: 15,
                         ),
                         Expanded(
@@ -167,11 +178,12 @@ class _EventDetailState extends State<EventDetail> {
                             controller: chat,
                             decoration: InputDecoration(
                                 hintText: "Write message...",
-                                hintStyle: TextStyle(color: Colors.black54),
+                                hintStyle: context.bodySmall?.copyWith(
+                                    color: context.colors.onBackground),
                                 border: InputBorder.none),
                           ),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           width: 15,
                         ),
                         FloatingActionButton(
@@ -184,13 +196,13 @@ class _EventDetailState extends State<EventDetail> {
                               clearText();
                             });
                           },
-                          child: Icon(
+                          backgroundColor: Colors.white,
+                          elevation: 0,
+                          child: const Icon(
                             Icons.send,
                             color: Colors.white,
                             size: 18,
                           ),
-                          backgroundColor: Colors.blue,
-                          elevation: 0,
                         ),
                       ],
                     ),

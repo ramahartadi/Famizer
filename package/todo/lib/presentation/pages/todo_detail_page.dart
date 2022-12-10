@@ -62,7 +62,7 @@ class _TodoDetailState extends State<TodoDetailPage> {
             onPressed: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => editTodoPage(Id: Id)),
+                MaterialPageRoute(builder: (context) => EditTodoPage(Id: Id)),
               );
             },
             icon: SvgPicture.asset(
@@ -82,9 +82,9 @@ class _TodoDetailState extends State<TodoDetailPage> {
                   Container(
                     child: ListTile(
                       contentPadding:
-                          EdgeInsets.only(right: 16, left: 16, top: 4),
+                          const EdgeInsets.only(right: 16, left: 16, top: 4),
                       leading: IconButton(
-                        icon: Icon(Icons.add),
+                        icon: const Icon(Icons.add),
                         onPressed: () {
                           collectionReferenceTodolist!.add({
                             'todo': '',
@@ -97,13 +97,13 @@ class _TodoDetailState extends State<TodoDetailPage> {
                       ),
                       title: TextField(
                         controller: _todoController,
-                        decoration: InputDecoration(
+                        decoration: const InputDecoration(
                           hintText: "Tambahkan todo detail item",
                           border: InputBorder.none,
                         ),
                       ),
                       trailing: IconButton(
-                        icon: Icon(Icons.cancel_outlined),
+                        icon: const Icon(Icons.cancel_outlined),
                         onPressed: () {
                           _todoController.clear();
                         },
@@ -117,7 +117,7 @@ class _TodoDetailState extends State<TodoDetailPage> {
                       itemBuilder: (BuildContext context, int index) {
                         return Dismissible(
                           background: Container(
-                            padding: EdgeInsets.symmetric(horizontal: 16),
+                            padding: const EdgeInsets.symmetric(horizontal: 16),
                             alignment: Alignment.centerLeft,
                             color: context.colors.errorContainer,
                             child: Icon(
@@ -143,7 +143,7 @@ class _TodoDetailState extends State<TodoDetailPage> {
                                     !snapshot.data!.docs[index].get('isDone')
                               });
                             },
-                            contentPadding: EdgeInsets.symmetric(
+                            contentPadding: const EdgeInsets.symmetric(
                                 vertical: 4, horizontal: 16),
                             leading: Icon(
                                 snapshot.data!.docs[index].get('isDone')
