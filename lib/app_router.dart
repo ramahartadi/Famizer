@@ -4,6 +4,7 @@ import 'package:login/login.dart';
 import 'package:signup/signup.dart';
 import 'package:events/events.dart';
 import 'package:todo/todo.dart';
+import 'package:family/family.dart';
 
 class AppRouter {
   late final GoRouter router = GoRouter(
@@ -50,6 +51,13 @@ class AppRouter {
             name: 'todo',
             builder: (context, state) {
               return const TodoPage();
+            },
+          ),
+          GoRoute(
+            path: 'family',
+            name: 'family',
+            builder: (context, state) {
+              return const FamilyMember();
             },
           )
         ],
