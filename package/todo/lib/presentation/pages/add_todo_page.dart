@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:theme/theme.dart';
-import 'package:todo/model/todo.dart';
 import 'package:todo/model/tugas.dart';
-import 'package:todo/model/list_tugas.dart';
-import 'package:nanoid/nanoid.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class addTodoPage extends StatefulWidget {
   const addTodoPage({super.key});
@@ -16,6 +13,22 @@ class addTodoPage extends StatefulWidget {
 class _addTodoPageState extends State<addTodoPage> {
   TextEditingController nameController = TextEditingController();
   TextEditingController descriptionController = TextEditingController();
+
+  CollectionReference collectionReference = FirebaseFirestore.instance
+      .collection('families')
+      .doc("qLyPcSCHfVJSj8W6QJXJ")
+      .collection("todos");
+
+  Future<void> addTodo(Tugas tugas) {
+    return collectionReference
+        .add({
+          'name': tugas.name,
+          'description': tugas.description,
+          'todoList': [],
+        })
+        .then((value) => print("todo added"))
+        .catchError((error) => print("Failed to add user: $error"));
+  }
 
   @override
   void initState() {
@@ -40,8 +53,11 @@ class _addTodoPageState extends State<addTodoPage> {
           IconButton(
               onPressed: () async {
                 setState(() {
-                  var tugasAdd = Tugas();
-                  listTugas.add(tugasAdd);
+                  var tugasAdd = Tugas(
+                      name: nameController.text,
+                      description: descriptionController.text,
+                      todoList: []);
+                  addTodo(tugasAdd);
                 });
                 Navigator.pop(context);
               },

@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:theme/theme.dart';
-// import 'package:todo/model/list_tugas.dart';
-import '../../model/list_tugas.dart';
-import '../../model/tugas.dart';
 import 'add_todo_page.dart';
 import 'todo_detail_page.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -83,29 +80,29 @@ class _TodoPageState extends State<TodoPage> {
                               style: context.titleMedium?.copyWith(
                                   color: context.colors.onBackground)),
                           subtitle: Text(
-                              '${snapshot.data!.docs[index].get('name')}',
+                              '${snapshot.data!.docs[index].get('description')}',
                               style: context.bodyMedium?.copyWith(
                                   color: context.colors.onSurfaceVariant)),
-                          trailing: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(
-                                  '${snapshot.data!.docs[index].get('name')} tugas',
-                                  style: context.bodyMedium?.copyWith(
-                                      color: context.colors.onSurfaceVariant)),
-                            ],
-                          ),
+                          // trailing: Column(
+                          //   mainAxisAlignment: MainAxisAlignment.center,
+                          //   children: [
+                          //     Text(
+                          //         '${snapshot.data!.docs[index].get('todoList').length} tugas',
+                          //         style: context.bodyMedium?.copyWith(
+                          //             color: context.colors.onSurfaceVariant)),
+                          //   ],
+                          // ),
                           onTap: () {
-                            // Navigator.push(
-                            //   context,
-                            //   MaterialPageRoute(
-                            //       builder: (context) => TodoDetailPage(
-                            //             todosList: listTugas[index].todoList!,
-                            //             index: index,
-                            //           )),
-                            // ).then((value) {
-                            //   setState(() {});
-                            // });
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => TodoDetailPage(
+                                        Id: snapshot
+                                            .data!.docs[index].reference.id,
+                                      )),
+                            ).then((value) {
+                              setState(() {});
+                            });
                           },
                           isThreeLine: true,
                         ),
@@ -140,7 +137,31 @@ class _TodoPageState extends State<TodoPage> {
                     )),
               );
             } else {
-              return const CircularProgressIndicator();
+              return Center(
+                child: Container(
+                    width: 265,
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        SvgPicture.asset(
+                          'assets/image/Group 18.svg',
+                          package: 'todo',
+                        ),
+                        SizedBox(
+                          height: 20,
+                        ),
+                        Text('ERROR',
+                            style: context.titleMedium
+                                ?.copyWith(color: context.colors.onBackground)),
+                        Text(
+                          'ERROR',
+                          style: context.bodyMedium
+                              ?.copyWith(color: context.colors.onBackground),
+                          textAlign: TextAlign.center,
+                        ),
+                      ],
+                    )),
+              );
             }
           }),
       floatingActionButton: Container(

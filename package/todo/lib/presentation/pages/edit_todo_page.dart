@@ -1,29 +1,47 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:theme/theme.dart';
-import 'package:todo/model/list_tugas.dart';
-import 'package:todo/model/todo.dart';
-import 'package:todo/presentation/pages/todo_detail_page.dart';
-import '../../model/tugas.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class editTodoPage extends StatefulWidget {
-  final int index;
+  final String Id;
 
-  const editTodoPage({Key? key, required this.index});
+  const editTodoPage({Key? key, required this.Id}) : super(key: key);
 
   @override
-  State<editTodoPage> createState() => _editTodoPageState();
+  State<editTodoPage> createState() => _editTodoPageState(Id: Id);
 }
 
 class _editTodoPageState extends State<editTodoPage> {
+  final String Id;
+  _editTodoPageState({Key? key, required this.Id});
+
   TextEditingController _namaTugasController = TextEditingController();
   TextEditingController _deskripsiTugasController = TextEditingController();
+
+  dynamic data;
 
   @override
   void initState() {
     super.initState();
-    // _namaTugasController.text = listTugas[widget.index].name;
-    // _deskripsiTugasController.text = listTugas[widget.index].description;
+    getData();
+  }
+
+  CollectionReference collectionReference = FirebaseFirestore.instance
+      .collection('families')
+      .doc("qLyPcSCHfVJSj8W6QJXJ")
+      .collection("todos");
+
+  Future<dynamic> getData() async {
+    final DocumentReference document = collectionReference.doc(Id);
+    await document.get().then<dynamic>(
+      (DocumentSnapshot snapshot) {
+        setState(() {
+          data = snapshot.data() as Map<String, dynamic>?;
+          _namaTugasController.text = data?["name"];
+          _deskripsiTugasController.text = data?["description"];
+        });
+      },
+    );
   }
 
   @override
@@ -79,13 +97,10 @@ class _editTodoPageState extends State<editTodoPage> {
           IconButton(
               onPressed: () async {
                 setState(() {
-                  var tugasEdit = Tugas(
-                      // listTugas[widget.index].id,
-                      // _namaTugasController.text,
-                      // _deskripsiTugasController.text,
-                      // listTugas[widget.index].todoList,
-                      );
-                  listTugas[widget.index] = tugasEdit;
+                  collectionReference.doc(Id).update({
+                    'name': _namaTugasController.text,
+                    'description': _deskripsiTugasController.text
+                  });
                 });
                 Navigator.pop(context);
               },
@@ -257,7 +272,7 @@ class _editTodoPageState extends State<editTodoPage> {
                           TextButton(
                             onPressed: () {
                               setState((() {
-                                listTugas.removeAt(widget.index);
+                                // listTugas.removeAt(widget.index);
                               }));
                               Navigator.pop(context, 'OK');
                               Navigator.pop(context);
