@@ -51,6 +51,9 @@ class _EventDetailState extends State<EventDetail> {
         length: 2,
         child: Scaffold(
           appBar: AppBar(
+            iconTheme: IconThemeData(
+              color: Colors.black, //change your color here
+            ),
             title: const Text("Family Trip"),
             actions: <Widget>[
               IconButton(
