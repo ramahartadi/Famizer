@@ -42,6 +42,13 @@ class AppRouter {
         ],
       ),
       GoRoute(
+        path: '/profileRegistration',
+        name: 'profileRegistration',
+        builder: (context, state) {
+          return const ProfileRegistration();
+        },
+      ),
+      GoRoute(
         path: '/editProfile',
         name: 'editProfile',
         builder: (context, state) {

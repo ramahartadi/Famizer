@@ -110,6 +110,9 @@ class _SignupPageState extends State<SignupPage> {
                           autovalidateMode: AutovalidateMode.onUserInteraction,
                           validator: FormBuilderValidators.email(
                               errorText: 'Masukan Email yang benar.'),
+                          onChanged: (value) {
+                            context.read<SignupCubit>().emailChanged(value);
+                          },
                         ),
                         const SizedBox(height: 20),
                         TextFormField(
@@ -200,10 +203,21 @@ class _SignupPageState extends State<SignupPage> {
                                     onPressed: () {
                                       final bool isValid =
                                           formKey.currentState!.validate();
+                                      print(isValid);
                                       if (!isValid) return;
                                       context
                                           .read<SignupCubit>()
                                           .signupFormSubmitted();
+                                      if (state.status ==
+                                          SignupStatus.success) {
+                                        context.goNamed('profileRegistration');
+                                      } else {
+                                        ScaffoldMessenger.of(context)
+                                            .showSnackBar(const SnackBar(
+                                          content:
+                                              Text('Terjadi suatu kesalahan'),
+                                        ));
+                                      }
                                     },
                                   );
                           },
