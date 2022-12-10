@@ -1,27 +1,47 @@
 import 'package:flutter/material.dart';
 import 'package:theme/theme.dart';
-import 'package:todo/model/list_tugas.dart';
-import '../../model/tugas.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
-class editTodoPage extends StatefulWidget {
-  final int index;
+class EditTodoPage extends StatefulWidget {
+  final String Id;
 
-  const editTodoPage({Key? key, required this.index});
+  const EditTodoPage({Key? key, required this.Id}) : super(key: key);
 
   @override
-  State<editTodoPage> createState() => _editTodoPageState();
+  State<EditTodoPage> createState() => _EditTodoPageState(Id: Id);
 }
 
-class _editTodoPageState extends State<editTodoPage> {
-  final TextEditingController _namaTugasController = TextEditingController();
-  final TextEditingController _deskripsiTugasController =
-      TextEditingController();
+class _EditTodoPageState extends State<EditTodoPage> {
+  final String Id;
+  _EditTodoPageState({Key? key, required this.Id});
+
+  TextEditingController _namaTugasController = TextEditingController();
+  TextEditingController _deskripsiTugasController = TextEditingController();
+
+  dynamic data;
 
   @override
   void initState() {
     super.initState();
-    _namaTugasController.text = listTugas[widget.index].name;
-    _deskripsiTugasController.text = listTugas[widget.index].description;
+    getData();
+  }
+
+  CollectionReference collectionReference = FirebaseFirestore.instance
+      .collection('families')
+      .doc("qLyPcSCHfVJSj8W6QJXJ")
+      .collection("todos");
+
+  Future<dynamic> getData() async {
+    final DocumentReference document = collectionReference.doc(Id);
+    await document.get().then<dynamic>(
+      (DocumentSnapshot snapshot) {
+        setState(() {
+          data = snapshot.data() as Map<String, dynamic>?;
+          _namaTugasController.text = data?["name"];
+          _deskripsiTugasController.text = data?["description"];
+        });
+      },
+    );
   }
 
   @override
@@ -77,12 +97,10 @@ class _editTodoPageState extends State<editTodoPage> {
           IconButton(
               onPressed: () async {
                 setState(() {
-                  var tugasEdit = Tugas(
-                      listTugas[widget.index].id,
-                      _namaTugasController.text,
-                      _deskripsiTugasController.text,
-                      listTugas[widget.index].todoList);
-                  listTugas[widget.index] = tugasEdit;
+                  collectionReference.doc(Id).update({
+                    'name': _namaTugasController.text,
+                    'description': _deskripsiTugasController.text
+                  });
                 });
                 Navigator.pop(context);
               },
@@ -253,7 +271,7 @@ class _editTodoPageState extends State<editTodoPage> {
                           TextButton(
                             onPressed: () {
                               setState((() {
-                                listTugas.removeAt(widget.index);
+                                // listTugas.removeAt(widget.index);
                               }));
                               Navigator.pop(context, 'OK');
                               Navigator.pop(context);
