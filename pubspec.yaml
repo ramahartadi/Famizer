@@ -49,6 +49,8 @@ dependencies:
         path: package/todo
     authentication:
         path: package/authentication
+    family:
+        path: package/family
 
     
     # The following adds the Cupertino Icons font to your application.

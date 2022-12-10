@@ -61,6 +61,13 @@ class AppRouter {
         builder: (context, state) {
           return const TodoPage();
         },
+      ),
+      GoRoute(
+        path: '/family',
+        name: 'family',
+        builder: (context, state) {
+          return const FamilyMember();
+        },
       )
     ],
     redirect: (context, state) {
