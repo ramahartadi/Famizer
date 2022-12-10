@@ -1,22 +1,37 @@
 class User {
   final String? id;
-  final String? nama;
-  final String? tanggalUlangTaun;
+  final String? name;
+  final String? birthday;
   final String? status;
   final String? mood;
 
   User(
       {required this.id,
-      required this.nama,
+      required this.name,
       required this.status,
-      required this.tanggalUlangTaun,
+      required this.birthday,
       this.mood = "Sangat Senang"});
+
+  Map<String, dynamic> toJson() => {
+        'id': id,
+        'name': name,
+        'birthday': birthday,
+        'status': status,
+        'mood': mood,
+      };
+
+  static User fromJson(Map<String, dynamic> json) => User(
+      id: json['id'],
+      name: json['name'],
+      status: json['status'],
+      birthday: json['birhday'],
+      mood: json['mood']);
 }
 
 var userProfile = User(
   id: '01',
-  nama: 'Ahmad',
+  name: 'Ahmad',
   status: 'Sedang sibuk',
-  tanggalUlangTaun: '2000-01-01',
+  birthday: '2000-01-01',
   mood: "Sangat Senang",
 );
