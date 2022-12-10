@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:home/home.dart';
 import 'package:theme/theme.dart';
@@ -13,6 +14,33 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  dynamic data;
+  String? nama;
+  String? status;
+
+  CollectionReference collectionReference =
+      FirebaseFirestore.instance.collection('users');
+
+  Future<dynamic> getData() async {
+    final DocumentReference document =
+        collectionReference.doc('lJX6X15kk3wHXX13gcYK');
+    await document.get().then<dynamic>(
+      (DocumentSnapshot snapshot) {
+        setState(() {
+          data = snapshot.data() as Map<String, dynamic>?;
+          nama = data["name"];
+          status = data["status"];
+        });
+      },
+    );
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    getData();
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -28,12 +56,12 @@ class _HomePageState extends State<HomePage> {
                   child: ListTile(
                       leading: FlutterLogo(size: 40),
                       title: Text(
-                        '${userProfile.nama}',
+                        '${nama}',
                         style: context.titleSmall
                             ?.copyWith(color: context.colors.onBackground),
                       ),
                       subtitle: Text(
-                        '${userProfile.status}',
+                        '${status}',
                         style: context.bodySmall
                             ?.copyWith(color: context.colors.secondary),
                       ),

@@ -14,7 +14,7 @@ class AppRouter {
         path: '/',
         name: 'login',
         builder: (context, state) {
-          return const LoginPage();
+          return const HomePage();
         },
         routes: [
           GoRoute(
