@@ -136,7 +136,9 @@ class _LoginPageState extends State<LoginPage> {
                                 backgroundColor: context.colors.primary,
                               ),
                               onPressed: () {},
-                              child: const CircularProgressIndicator(),
+                              child: CircularProgressIndicator(
+                                color: context.colors.onPrimary,
+                              ),
                             )
                           : ElevatedButton(
                               onPressed: () {

@@ -9,6 +9,7 @@ import 'package:login/login.dart';
 import 'package:signup/signup.dart';
 import 'package:todo/todo.dart';
 import 'package:family/family.dart';
+import 'package:settings/settings.dart';
 
 class AppRouter {
   final AppBloc appBloc;
@@ -24,6 +25,15 @@ class AppRouter {
         builder: (context, state) {
           return const HomePage();
         },
+        routes: [
+          GoRoute(
+            path: 'settings',
+            name: 'settings',
+            builder: (context, state) {
+              return const SettingPage();
+            },
+          ),
+        ],
       ),
       GoRoute(
         path: '/login',
@@ -82,7 +92,6 @@ class AppRouter {
       if (signup) {
         return null;
       }
-
       if (!loggedIn) {
         return logginIn ? null : '/login';
       }
