@@ -29,6 +29,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.9.0"
+  authentication:
+    dependency: "direct main"
+    description:
+      path: "package/authentication"
+      relative: true
+    source: path
+    version: "0.0.1"
   bloc:
     dependency: transitive
     description:
@@ -203,7 +210,7 @@ packages:
     source: sdk
     version: "0.0.0"
   flutter_bloc:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: flutter_bloc
       url: "https://pub.dartlang.org"
@@ -265,7 +272,7 @@ packages:
       name: go_router
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "5.2.3"
+    version: "5.0.1"
   home:
     dependency: "direct main"
     description:
@@ -386,7 +393,7 @@ packages:
     source: hosted
     version: "1.8.0"
   nanoid:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: nanoid
       url: "https://pub.dartlang.org"
