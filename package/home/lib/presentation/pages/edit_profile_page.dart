@@ -7,7 +7,7 @@ import 'package:intl/intl.dart';
 enum MoodUser { SangatSenang, Senang, BiasaSaja, TidakSenang, Sakit }
 
 class EditProfilePage extends StatefulWidget {
-  EditProfilePage({super.key});
+  const EditProfilePage({super.key});
   @override
   State<EditProfilePage> createState() => _EditProfilePageState();
 }
@@ -28,7 +28,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
   }
 
   MoodUser? _moodUser = MoodUser.SangatSenang;
-  _EditProfilePageState({Key? key});
+  _EditProfilePageState();
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +37,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
         title: const Text('Edit profil'),
         actions: [
           IconButton(
-            icon: Icon(Icons.check),
+            icon: const Icon(Icons.check),
             onPressed: () {
               setState(() {
                 var userEdit = User(
@@ -56,12 +56,12 @@ class _EditProfilePageState extends State<EditProfilePage> {
       body: Container(
         margin: const EdgeInsets.symmetric(horizontal: 16),
         child: Column(children: [
-          SizedBox(
+          const SizedBox(
             height: 20,
           ),
           Stack(
             children: [
-              CircleAvatar(
+              const CircleAvatar(
                 radius: 50,
                 backgroundImage: AssetImage(
                   'assets/image/Userimage.jpg',
@@ -90,7 +90,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                   ))
             ],
           ),
-          SizedBox(
+          const SizedBox(
             height: 20,
           ),
           TextFormField(
@@ -111,7 +111,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
               ),
             ),
           ),
-          SizedBox(
+          const SizedBox(
             height: 20,
           ),
           TextFormField(
@@ -145,7 +145,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
               ),
             ),
           ),
-          SizedBox(
+          const SizedBox(
             height: 20,
           ),
           TextFormField(
@@ -166,7 +166,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
               ),
             ),
           ),
-          SizedBox(
+          const SizedBox(
             height: 20,
           ),
           TextFormField(
@@ -343,11 +343,11 @@ class _EditProfilePageState extends State<EditProfilePage> {
   Widget bottomsheet() {
     return Container(
         height: 100,
-        margin: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+        margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
         child: Column(
           children: [
-            Text("Pilih gambar"),
-            SizedBox(
+            const Text("Pilih gambar"),
+            const SizedBox(
               height: 20,
             ),
             Row(
@@ -356,13 +356,13 @@ class _EditProfilePageState extends State<EditProfilePage> {
                 TextButton(
                   onPressed: () {},
                   child: Row(
-                    children: [Icon(Icons.camera), Text("Kamera")],
+                    children: const [Icon(Icons.camera), Text("Kamera")],
                   ),
                 ),
                 TextButton(
                   onPressed: () {},
                   child: Row(
-                    children: [Icon(Icons.image), Text("Galeri")],
+                    children: const [Icon(Icons.image), Text("Galeri")],
                   ),
                 )
               ],

@@ -64,7 +64,7 @@ class _EventDetailState extends State<EventDetail> {
                 onPressed: () {
                   Navigator.of(context).push(MaterialPageRoute(
                       builder: (context) => EventEdit(
-                            id:widget.id,
+                            id: widget.id,
                             name: widget.name,
                             desciption: widget.desciption,
                             date: widget.date,
@@ -86,37 +86,45 @@ class _EventDetailState extends State<EventDetail> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Card(
-                      margin: const EdgeInsets.all(20),
-                      child: Container(
+                  const Card(
+                      margin: EdgeInsets.all(20),
+                      child: SizedBox(
                         height: 200,
                         width: double.infinity,
-                        child: const Center(
+                        child: Center(
                           child: Text(''),
                         ),
                       )),
                   const SizedBox(height: 5),
                   Row(
                     children: [
-                      SizedBox(width: 10),
+                      const SizedBox(width: 10),
                       Text(widget.name, style: context.headlineSmall),
                     ],
                   ),
                   const SizedBox(height: 10),
                   Row(
                     children: [
-                      SizedBox(width: 5),
-                      Icon(Icons.schedule),
-                      SizedBox(width: 5),
-                      Text(widget.date,style: context.bodySmall?.copyWith(color: context.colors.onSurfaceVariant)),
-                      SizedBox(width: 5),
-                      Text("${widget.timeStart} - ${widget.timeEnd}",style: context.bodySmall?.copyWith(color: context.colors.onSurfaceVariant))
+                      const SizedBox(width: 5),
+                      const Icon(Icons.schedule),
+                      const SizedBox(width: 5),
+                      Text(widget.date,
+                          style: context.bodySmall?.copyWith(
+                              color: context.colors.onSurfaceVariant)),
+                      const SizedBox(width: 5),
+                      Text("${widget.timeStart} - ${widget.timeEnd}",
+                          style: context.bodySmall?.copyWith(
+                              color: context.colors.onSurfaceVariant))
                     ],
                   ),
                   const SizedBox(height: 10),
                   Row(
-                    children: [SizedBox(width: 10), Text(widget.desciption,
-                     style: context.bodyLarge?.copyWith(color: context.colors.onBackground))],
+                    children: [
+                      const SizedBox(width: 10),
+                      Text(widget.desciption,
+                          style: context.bodyLarge
+                              ?.copyWith(color: context.colors.onBackground))
+                    ],
                   )
                 ],
               ),
@@ -126,7 +134,7 @@ class _EventDetailState extends State<EventDetail> {
                 ListView.builder(
                   itemCount: messages.length,
                   shrinkWrap: true,
-                  padding: const EdgeInsets.only(top: 10, bottom: 10),                  
+                  padding: const EdgeInsets.only(top: 10, bottom: 10),
                   itemBuilder: (context, index) {
                     return SingleChildScrollView(
                       child: Container(
@@ -138,13 +146,13 @@ class _EventDetailState extends State<EventDetail> {
                               : Alignment.topRight),
                           child: Container(
                             decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(20),
-                              color: context.colors.surfaceVariant
-                            ),
+                                borderRadius: BorderRadius.circular(20),
+                                color: context.colors.surfaceVariant),
                             padding: const EdgeInsets.all(16),
                             child: Text(
                               messages[index].messageContent,
-                              style: context.bodyMedium?.copyWith(color:context.colors.onSurface),
+                              style: context.bodyMedium
+                                  ?.copyWith(color: context.colors.onSurface),
                             ),
                           ),
                         ),
@@ -155,7 +163,8 @@ class _EventDetailState extends State<EventDetail> {
                 Align(
                   alignment: Alignment.bottomLeft,
                   child: Container(
-                    padding: const EdgeInsets.only(left: 10, bottom: 10, top: 10),
+                    padding:
+                        const EdgeInsets.only(left: 10, bottom: 10, top: 10),
                     height: 60,
                     width: double.infinity,
                     color: Colors.white,
@@ -169,7 +178,8 @@ class _EventDetailState extends State<EventDetail> {
                             controller: chat,
                             decoration: InputDecoration(
                                 hintText: "Write message...",
-                                hintStyle: context.bodySmall?.copyWith(color: context.colors.onBackground),
+                                hintStyle: context.bodySmall?.copyWith(
+                                    color: context.colors.onBackground),
                                 border: InputBorder.none),
                           ),
                         ),

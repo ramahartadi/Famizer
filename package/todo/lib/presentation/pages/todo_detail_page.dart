@@ -8,7 +8,7 @@ import '../../model/list_tugas.dart';
 class TodoDetailPage extends StatefulWidget {
   final List<ToDo> todosList;
   final int index;
-  TodoDetailPage({Key? key, required this.todosList, required this.index})
+  const TodoDetailPage({Key? key, required this.todosList, required this.index})
       : super(key: key);
 
   @override
@@ -19,7 +19,7 @@ class TodoDetailPage extends StatefulWidget {
 class _TodoDetailState extends State<TodoDetailPage> {
   final List<ToDo> todoData;
   final int index;
-  _TodoDetailState({Key? key, required this.todoData, required this.index});
+  _TodoDetailState({required this.todoData, required this.index});
   final _todoController = TextEditingController();
 
   List<ToDo> _foundTodo = [];
@@ -40,7 +40,7 @@ class _TodoDetailState extends State<TodoDetailPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('${listTugas[index].name}'),
+        title: Text(listTugas[index].name),
         actions: [
           IconButton(
             onPressed: () {
@@ -61,22 +61,23 @@ class _TodoDetailState extends State<TodoDetailPage> {
         child: Column(children: [
           Container(
             child: ListTile(
-              contentPadding: EdgeInsets.only(right: 16, left: 16, top: 4),
+              contentPadding:
+                  const EdgeInsets.only(right: 16, left: 16, top: 4),
               leading: IconButton(
-                icon: Icon(Icons.add),
+                icon: const Icon(Icons.add),
                 onPressed: () {
                   _addTodoItem(_todoController.text);
                 },
               ),
               title: TextField(
                 controller: _todoController,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   hintText: "Tambahkan todo detail item",
                   border: InputBorder.none,
                 ),
               ),
               trailing: IconButton(
-                icon: Icon(Icons.cancel_outlined),
+                icon: const Icon(Icons.cancel_outlined),
                 onPressed: () {
                   _todoController.clear();
                 },
@@ -90,7 +91,7 @@ class _TodoDetailState extends State<TodoDetailPage> {
               itemBuilder: (BuildContext context, int index) {
                 return Dismissible(
                   background: Container(
-                    padding: EdgeInsets.symmetric(horizontal: 16),
+                    padding: const EdgeInsets.symmetric(horizontal: 16),
                     alignment: Alignment.centerLeft,
                     color: context.colors.errorContainer,
                     child: Icon(
@@ -109,7 +110,7 @@ class _TodoDetailState extends State<TodoDetailPage> {
                       _handleTodoChange(_foundTodo[index]);
                     },
                     contentPadding:
-                        EdgeInsets.symmetric(vertical: 4, horizontal: 16),
+                        const EdgeInsets.symmetric(vertical: 4, horizontal: 16),
                     leading: Icon(_foundTodo[index].isDone
                         ? Icons.check_box
                         : Icons.check_box_outline_blank),
