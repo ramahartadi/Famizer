@@ -4,6 +4,7 @@ import 'package:theme/theme.dart';
 import '../../model/list_tugas.dart';
 import 'add_todo_page.dart';
 import 'todo_detail_page.dart';
+import 'package:go_router/go_router.dart';
 
 class TodoPage extends StatefulWidget {
   const TodoPage({super.key});
@@ -19,7 +20,7 @@ class _TodoPageState extends State<TodoPage> {
       appBar: AppBar(
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
-          onPressed: () => Navigator.of(context).pop(),
+          onPressed: () => context.goNamed('home'),
         ),
         title: const Text("Daftar Tugas"),
       ),
