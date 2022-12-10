@@ -10,9 +10,9 @@ import 'firebase_options.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   Bloc.observer = AppBlocObserver();
-  final authRepository = AuthRepository();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+  final authRepository = AuthRepository();
   runApp(FamizerApp(authRepository: authRepository));
 }
