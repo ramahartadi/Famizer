@@ -1,5 +1,9 @@
+import 'package:authentication/presentation/blocs/app/app_bloc.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:go_router/go_router.dart';
 import 'package:theme/theme.dart';
 import 'package:about/about.dart';
 
@@ -54,11 +58,14 @@ class _SettingPageState extends State<SettingPage> {
                     const SizedBox(height: 10),
                     RichText(
                       text: TextSpan(
-                        text: 'Edit Profil',
-                        style: context.labelLarge?.copyWith(
-                          color: context.colors.primary,
-                        ),
-                      ),
+                          text: 'Edit Profil',
+                          style: context.labelLarge?.copyWith(
+                            color: context.colors.primary,
+                          ),
+                          recognizer: TapGestureRecognizer()
+                            ..onTap = (() {
+                              context.pushNamed('editProfile');
+                            })),
                     )
                   ],
                 ),
@@ -67,59 +74,6 @@ class _SettingPageState extends State<SettingPage> {
           ),
           const SizedBox(height: 20),
           ...ListTile.divideTiles(context: context, tiles: [
-            //TODO Hilangkan Opsi ubah email dan password apabila login menggunakan akun google
-            Theme(
-              data: ThemeData(
-                splashColor: Colors.transparent,
-                highlightColor: Colors.transparent,
-              ),
-              child: SizedBox(
-                height: 60,
-                child: ListTile(
-                  leading: Icon(
-                    Icons.email_outlined,
-                    color: context.colors.onSurfaceVariant,
-                  ),
-                  title: Text(
-                    'Ubah Email',
-                    style: context.titleMedium?.copyWith(
-                      color: context.colors.onBackground,
-                    ),
-                  ),
-                  trailing: Icon(
-                    Icons.chevron_right,
-                    color: context.colors.onSurfaceVariant,
-                  ),
-                  onTap: () {},
-                ),
-              ),
-            ),
-            Theme(
-              data: ThemeData(
-                splashColor: Colors.transparent,
-                highlightColor: Colors.transparent,
-              ),
-              child: SizedBox(
-                height: 60,
-                child: ListTile(
-                  leading: Icon(
-                    Icons.lock_outline,
-                    color: context.colors.onSurfaceVariant,
-                  ),
-                  title: Text(
-                    'Ubah Password',
-                    style: context.titleMedium?.copyWith(
-                      color: context.colors.onBackground,
-                    ),
-                  ),
-                  trailing: Icon(
-                    Icons.chevron_right,
-                    color: context.colors.onSurfaceVariant,
-                  ),
-                  onTap: () {},
-                ),
-              ),
-            ),
             Theme(
               data: ThemeData(
                 splashColor: Colors.transparent,
@@ -186,7 +140,32 @@ class _SettingPageState extends State<SettingPage> {
                     Icons.chevron_right,
                     color: context.colors.onSurfaceVariant,
                   ),
-                  onTap: () {},
+                  onTap: () {
+                    showDialog(
+                      context: context,
+                      builder: (context) {
+                        return AlertDialog(
+                          content: const Text('Apakah anda ingin keluar'),
+                          actions: [
+                            TextButton(
+                              child: const Text('Batal'),
+                              onPressed: () {
+                                Navigator.pop(context);
+                              },
+                            ),
+                            TextButton(
+                              child: const Text('Ok'),
+                              onPressed: () {
+                                context
+                                    .read<AppBloc>()
+                                    .add(AppLogoutRequested());
+                              },
+                            ),
+                          ],
+                        );
+                      },
+                    );
+                  },
                 ),
               ),
             ),

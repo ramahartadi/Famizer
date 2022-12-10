@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:home/home.dart';
+import 'package:go_router/go_router.dart';
 import 'package:theme/theme.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import '../../model/user.dart';
@@ -43,13 +43,7 @@ class _HomePageState extends State<HomePage> {
                             color: context.colors.onSurfaceVariant,
                           ),
                           onPressed: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) =>
-                                        EditProfilePage())).then((value) {
-                              setState(() {});
-                            });
+                            context.goNamed('settings');
                           })),
                 ),
                 const SizedBox(height: 20),
