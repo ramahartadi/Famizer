@@ -3,6 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:theme/theme.dart';
 import 'add_todo_page.dart';
 import 'todo_detail_page.dart';
+import 'package:go_router/go_router.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class TodoPage extends StatefulWidget {
@@ -57,7 +58,7 @@ class _TodoPageState extends State<TodoPage> {
       appBar: AppBar(
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
-          onPressed: () => Navigator.of(context).pop(),
+          onPressed: () => context.goNamed('home'),
         ),
         title: const Text("Daftar Tugas"),
       ),
