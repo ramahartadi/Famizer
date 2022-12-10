@@ -1,5 +1,7 @@
+import 'package:authentication/presentation/cubits/cubits.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:theme/theme.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:go_router/go_router.dart';
@@ -90,6 +92,9 @@ class _LoginPageState extends State<LoginPage> {
                     autovalidateMode: AutovalidateMode.always,
                     validator: FormBuilderValidators.email(
                         errorText: 'Masukan Email yang benar.'),
+                    onChanged: (value) {
+                      context.read<LoginCubit>().emailChanged(value);
+                    },
                   ),
                   const SizedBox(height: 20),
                   TextFormField(
@@ -115,23 +120,43 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                     ),
                     obscureText: obscurePassword,
+                    onChanged: (value) {
+                      context.read<LoginCubit>().passwordChanged(value);
+                    },
                   ),
                   const SizedBox(height: 20),
-                  ElevatedButton(
-                    onPressed: () {},
-                    style: ElevatedButton.styleFrom(
-                      elevation: 0,
-                      backgroundColor: context.colors.primary,
-                    ),
-                    child: Text(
-                      'Sign in',
-                      style: TextStyle(color: context.colors.onPrimary),
-                    ),
-                  ),
-                  const SizedBox(height: 20),
-                  OutlinedButton(
-                    child: const Text('Sign in with Google'),
-                    onPressed: () {},
+                  BlocBuilder<LoginCubit, LoginState>(
+                    buildWhen: (previous, current) =>
+                        previous.status != current.status,
+                    builder: (context, state) {
+                      return state.status == LoginStatus.submitting
+                          ? ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                elevation: 0,
+                                backgroundColor: context.colors.primary,
+                              ),
+                              onPressed: () {},
+                              child: CircularProgressIndicator(
+                                color: context.colors.onPrimary,
+                              ),
+                            )
+                          : ElevatedButton(
+                              onPressed: () {
+                                context
+                                    .read<LoginCubit>()
+                                    .logInWithCredentials();
+                              },
+                              style: ElevatedButton.styleFrom(
+                                elevation: 0,
+                                backgroundColor: context.colors.primary,
+                              ),
+                              child: Text(
+                                'Sign in',
+                                style:
+                                    TextStyle(color: context.colors.onPrimary),
+                              ),
+                            );
+                    },
                   ),
                   const SizedBox(height: 20),
                   RichText(

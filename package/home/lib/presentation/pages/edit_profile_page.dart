@@ -8,7 +8,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 enum MoodUser { SangatSenang, Senang, BiasaSaja, TidakSenang, Sakit }
 
 class EditProfilePage extends StatefulWidget {
-  EditProfilePage({super.key});
+  const EditProfilePage({super.key});
   @override
   State<EditProfilePage> createState() => _EditProfilePageState();
 }
@@ -67,7 +67,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
   }
 
   MoodUser? _moodUser = MoodUser.SangatSenang;
-  _EditProfilePageState({Key? key});
+  _EditProfilePageState();
 
   @override
   Widget build(BuildContext context) {
@@ -381,11 +381,11 @@ class _EditProfilePageState extends State<EditProfilePage> {
   Widget bottomsheet() {
     return Container(
         height: 100,
-        margin: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+        margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
         child: Column(
           children: [
-            Text("Pilih gambar"),
-            SizedBox(
+            const Text("Pilih gambar"),
+            const SizedBox(
               height: 20,
             ),
             Row(
@@ -394,13 +394,13 @@ class _EditProfilePageState extends State<EditProfilePage> {
                 TextButton(
                   onPressed: () {},
                   child: Row(
-                    children: [Icon(Icons.camera), Text("Kamera")],
+                    children: const [Icon(Icons.camera), Text("Kamera")],
                   ),
                 ),
                 TextButton(
                   onPressed: () {},
                   child: Row(
-                    children: [Icon(Icons.image), Text("Galeri")],
+                    children: const [Icon(Icons.image), Text("Galeri")],
                   ),
                 )
               ],
