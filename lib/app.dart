@@ -45,6 +45,10 @@ class FamizerApp extends StatelessWidget {
               BlocProvider(
                 create: (context) => LoginCubit(context.read<AuthRepository>()),
               ),
+              BlocProvider(
+                create: (context) =>
+                    SignupCubit(context.read<AuthRepository>()),
+              ),
             ],
             child: Builder(builder: (context) {
               return MaterialApp.router(

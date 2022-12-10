@@ -82,7 +82,6 @@ class AppRouter {
       if (signup) {
         return null;
       }
-
       if (!loggedIn) {
         return logginIn ? null : '/login';
       }
