@@ -40,8 +40,7 @@ class _addTodoPageState extends State<addTodoPage> {
           IconButton(
               onPressed: () async {
                 setState(() {
-                  var tugasAdd = Tugas(nanoid(3), nameController.text,
-                      descriptionController.text, []);
+                  var tugasAdd = Tugas();
                   listTugas.add(tugasAdd);
                 });
                 Navigator.pop(context);

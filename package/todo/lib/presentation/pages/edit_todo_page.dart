@@ -22,8 +22,8 @@ class _editTodoPageState extends State<editTodoPage> {
   @override
   void initState() {
     super.initState();
-    _namaTugasController.text = listTugas[widget.index].name;
-    _deskripsiTugasController.text = listTugas[widget.index].description;
+    // _namaTugasController.text = listTugas[widget.index].name;
+    // _deskripsiTugasController.text = listTugas[widget.index].description;
   }
 
   @override
@@ -80,10 +80,11 @@ class _editTodoPageState extends State<editTodoPage> {
               onPressed: () async {
                 setState(() {
                   var tugasEdit = Tugas(
-                      listTugas[widget.index].id,
-                      _namaTugasController.text,
-                      _deskripsiTugasController.text,
-                      listTugas[widget.index].todoList);
+                      // listTugas[widget.index].id,
+                      // _namaTugasController.text,
+                      // _deskripsiTugasController.text,
+                      // listTugas[widget.index].todoList,
+                      );
                   listTugas[widget.index] = tugasEdit;
                 });
                 Navigator.pop(context);
