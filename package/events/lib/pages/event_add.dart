@@ -59,6 +59,9 @@ class _EventAddState extends State<EventAdd> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
+          iconTheme: IconThemeData(
+              color: Colors.black, //change your color here
+            ),
           title: const Text("Tambah Kegiatan"),
           actions: <Widget>[
             IconButton(
@@ -159,7 +162,7 @@ class _EventAddState extends State<EventAdd> {
                           dateController.text = formattedDate.toString();
                         });
                       } else {
-                        print("Not selected");
+                        debugPrint("Not selected");
                       }
                     }),
               ),
