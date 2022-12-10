@@ -18,6 +18,9 @@ class _EventListState extends State<EventList> {
     return Scaffold(
       backgroundColor: context.colors.surface,
       appBar: AppBar(
+        iconTheme: IconThemeData(
+              color: Colors.black, //change your color here
+            ),
           title: const Text(
             "Kegiatan",
             style: TextStyle(color: Colors.black),
