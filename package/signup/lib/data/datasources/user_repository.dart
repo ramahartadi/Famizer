@@ -18,7 +18,7 @@ class UserRepository {
         "email": email,
         "status": "Hello",
         "imageUrl":
-            "https://firebasestorage.googleapis.com/v0/b/famizer-abc23.appspot.com/o/.jpg?alt=media&token=7eb9e167-b6b1-4db6-80c5-97648753e8a9",
+            "https://firebasestorage.googleapis.com/v0/b/famizer-abc23.appspot.com/o/default.jpg?alt=media&token=7eb9e167-b6b1-4db6-80c5-97648753e8a9",
         "date": DateFormat("yyyy-MM-dd").format(DateTime.now()),
         "mood": "Senang",
         "birthday": DateFormat("yyyy-MM-dd").format(DateTime.now()),

@@ -9,7 +9,7 @@ class FamilyMember extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     CollectionReference ref = FirebaseFirestore.instance.collection("users");
-    Query ref2 = FirebaseFirestore.instance.collection("users").orderBy("timeStamp");
+    Query ref2 = FirebaseFirestore.instance.collection("users").orderBy("timestamp");
 
     return DefaultTabController(
         length: 2,
@@ -22,7 +22,7 @@ class FamilyMember extends StatelessWidget {
               color: Colors.black, //change your color here
             ),
             backgroundColor: context.colors.surface,
-            title: const Text("Keluarga Ahmad",
+            title: const Text("Anggota Keluarga",
                 style: TextStyle(color: Colors.black)),            
             bottom: TabBar(
                 indicatorColor: context.colors.primary,
