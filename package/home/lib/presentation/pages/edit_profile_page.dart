@@ -60,7 +60,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
     if (image != null) {
       Reference ref = FirebaseStorage.instance.ref().child('profilepic.jpg');
 
-      await ref.putFile(File(image!.path));
+      await ref.putFile(File(image.path));
       ref.getDownloadURL().then((value) {
         setState(() {
           profilePicLink = value;
