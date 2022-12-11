@@ -1,6 +1,9 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
+import 'package:go_router/go_router.dart';
+import 'package:signup/presentation/bloc/create_new_user_bloc.dart';
 import 'package:theme/theme.dart';
 
 class ProfileRegistration extends StatefulWidget {
@@ -12,10 +15,18 @@ class ProfileRegistration extends StatefulWidget {
 
 class _ProfileRegistrationState extends State<ProfileRegistration> {
   late TextEditingController nameController;
+  FirebaseAuth firebaseAuth = FirebaseAuth.instance;
+  late User? user;
+  late String? uid;
+  late String? email;
+
   @override
   void initState() {
     super.initState();
     nameController = TextEditingController();
+    user = firebaseAuth.currentUser;
+    uid = user?.uid;
+    email = user?.email;
   }
 
   @override
@@ -35,38 +46,6 @@ class _ProfileRegistrationState extends State<ProfileRegistration> {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Align(
-              alignment: Alignment.center,
-              child: Stack(
-                clipBehavior: Clip.none,
-                children: [
-                  CircleAvatar(
-                    backgroundColor: context.colors.primaryContainer,
-                    radius: 50,
-                    child: SvgPicture.asset(
-                      'assets/avatar_placeholder.svg',
-                      semanticsLabel: 'Avatar Placeholder',
-                      package: 'signup',
-                      color: context.colors.primary,
-                    ),
-                  ),
-                  Positioned(
-                    top: -15,
-                    right: 0,
-                    child: CircleAvatar(
-                      backgroundColor: context.colors.primary,
-                      radius: 20,
-                      child: IconButton(
-                        icon: const Icon(Icons.add_a_photo_outlined),
-                        tooltip: 'Add a photo',
-                        onPressed: () {},
-                        color: context.colors.onPrimary,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
             const SizedBox(height: 20),
             TextFormField(
               controller: nameController,
@@ -94,7 +73,19 @@ class _ProfileRegistrationState extends State<ProfileRegistration> {
                 'Konfirmasi',
                 style: TextStyle(color: context.colors.onPrimary),
               ),
-              onPressed: () {},
+              onPressed: () async {
+                context
+                    .read<CreateNewUserBloc>()
+                    .add(Create(uid!, nameController.text, email!));
+                await Future.delayed(
+                  const Duration(
+                    seconds: 1,
+                  ),
+                  () {
+                    context.goNamed('home');
+                  },
+                );
+              },
             ),
           ],
         ),

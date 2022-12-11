@@ -1,4 +1,9 @@
+import 'package:authentication/presentation/cubits/signup/signup_cubit.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:theme/theme.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 
@@ -106,6 +111,9 @@ class _SignupPageState extends State<SignupPage> {
                           autovalidateMode: AutovalidateMode.onUserInteraction,
                           validator: FormBuilderValidators.email(
                               errorText: 'Masukan Email yang benar.'),
+                          onChanged: (value) {
+                            context.read<SignupCubit>().emailChanged(value);
+                          },
                         ),
                         const SizedBox(height: 20),
                         TextFormField(
@@ -168,18 +176,59 @@ class _SignupPageState extends State<SignupPage> {
                             errorText: 'Password tidak sama.',
                           ),
                           obscureText: obscureConfirmPassword,
+                          onChanged: (value) {
+                            context.read<SignupCubit>().passwordChanged(value);
+                          },
                         ),
                         const SizedBox(height: 20),
-                        ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: context.colors.primary,
-                            elevation: 0,
-                          ),
-                          child: Text(
-                            'Sign up',
-                            style: TextStyle(color: context.colors.onPrimary),
-                          ),
-                          onPressed: () {},
+                        BlocBuilder<SignupCubit, SignupState>(
+                          buildWhen: (previous, current) {
+                            return previous.status != current.status;
+                          },
+                          builder: (context, state) {
+                            return state.status == SignupStatus.submitting
+                                ? ElevatedButton(
+                                    child: const CircularProgressIndicator(),
+                                    onPressed: () {},
+                                  )
+                                : ElevatedButton(
+                                    style: ElevatedButton.styleFrom(
+                                      backgroundColor: context.colors.primary,
+                                      elevation: 0,
+                                    ),
+                                    child: Text(
+                                      'Sign up',
+                                      style: TextStyle(
+                                          color: context.colors.onPrimary),
+                                    ),
+                                    onPressed: () async {
+                                      final bool isValid =
+                                          formKey.currentState!.validate();
+                                      if (!isValid) return;
+                                      try {
+                                        await context
+                                            .read<SignupCubit>()
+                                            .signupFormSubmitted();
+                                        Future.delayed(
+                                          const Duration(seconds: 1),
+                                          () {
+                                            context
+                                                .goNamed('profileRegistration');
+                                          },
+                                        );
+                                      } on FirebaseAuthException catch (e) {
+                                        ScaffoldMessenger.of(context)
+                                            .showSnackBar(
+                                          SnackBar(
+                                            content: Text(
+                                              e.toString(),
+                                            ),
+                                          ),
+                                        );
+                                      }
+                                    },
+                                  );
+                          },
                         ),
                         const SizedBox(height: 20),
                         RichText(
@@ -190,11 +239,14 @@ class _SignupPageState extends State<SignupPage> {
                             ),
                             children: [
                               TextSpan(
-                                text: ' Sign in',
-                                style: context.labelMedium?.copyWith(
-                                  color: context.colors.primary,
-                                ),
-                              )
+                                  text: ' Sign in',
+                                  style: context.labelMedium?.copyWith(
+                                    color: context.colors.primary,
+                                  ),
+                                  recognizer: TapGestureRecognizer()
+                                    ..onTap = () {
+                                      context.pop();
+                                    }),
                             ],
                           ),
                           textAlign: TextAlign.center,

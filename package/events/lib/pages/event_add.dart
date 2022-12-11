@@ -182,7 +182,7 @@ class _EventAddState extends State<EventAdd> {
                           dateController.text = formattedDate.toString();
                         });
                       } else {
-                        print("Not selected");
+                        debugPrint("Not selected");
                       }
                     }),
               ),
