@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
+import 'package:go_router/go_router.dart';
 import 'package:signup/presentation/bloc/create_new_user_bloc.dart';
 import 'package:theme/theme.dart';
 
@@ -72,10 +73,18 @@ class _ProfileRegistrationState extends State<ProfileRegistration> {
                 'Konfirmasi',
                 style: TextStyle(color: context.colors.onPrimary),
               ),
-              onPressed: () {
+              onPressed: () async {
                 context
                     .read<CreateNewUserBloc>()
                     .add(Create(uid!, nameController.text, email!));
+                await Future.delayed(
+                  const Duration(
+                    seconds: 1,
+                  ),
+                  () {
+                    context.goNamed('home');
+                  },
+                );
               },
             ),
           ],
