@@ -1,10 +1,10 @@
-import 'package:events/model/chat.dart';
 import 'package:flutter/material.dart';
 import "package:events/pages/event_edit.dart";
-import 'package:events/pages/chat_list.dart';
 import 'package:theme/theme.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class EventDetail extends StatefulWidget {
+  final String url;
   final String id;
   final String name;
   final String desciption;
@@ -13,6 +13,7 @@ class EventDetail extends StatefulWidget {
   final String timeEnd;
   const EventDetail(
       {Key? key,
+      required this.url,
       required this.id,
       required this.name,
       required this.desciption,
@@ -27,11 +28,26 @@ class EventDetail extends StatefulWidget {
 }
 
 class _EventDetailState extends State<EventDetail> {
+  CollectionReference? ref;
+  Query? ref2;
+
   TextEditingController chat = TextEditingController();
 
   @override
   void initState() {
     super.initState();
+    ref = FirebaseFirestore.instance
+        .collection("families")
+        .doc("qLyPcSCHfVJSj8W6QJXJ")
+        .collection("events")
+        .doc(widget.id)
+        .collection("discussions");
+    ref2=FirebaseFirestore.instance
+        .collection("families")
+        .doc("qLyPcSCHfVJSj8W6QJXJ")
+        .collection("events")
+        .doc(widget.id)
+        .collection("discussions").orderBy("timeStamp");
     chat.text = '';
   }
 
@@ -51,19 +67,22 @@ class _EventDetailState extends State<EventDetail> {
         length: 2,
         child: Scaffold(
           appBar: AppBar(
-            iconTheme: IconThemeData(
+            leading: IconButton(
+                onPressed: (() => Navigator.of(context).pop()),
+                icon: const Icon(Icons.arrow_back)),
+            iconTheme: const IconThemeData(
               color: Colors.black, //change your color here
             ),
-            title: const Text("Family Trip"),
+            title: Text(widget.name),
             actions: <Widget>[
               IconButton(
                 icon: const Icon(
                   Icons.edit,
-                  color: Colors.white,
                 ),
                 onPressed: () {
                   Navigator.of(context).push(MaterialPageRoute(
                       builder: (context) => EventEdit(
+                            url: widget.url,
                             id: widget.id,
                             name: widget.name,
                             desciption: widget.desciption,
@@ -74,25 +93,34 @@ class _EventDetailState extends State<EventDetail> {
                 },
               )
             ],
-            bottom: const TabBar(tabs: [
-              Tab(text: "Detail"),
-              Tab(
-                text: "Diskusi",
-              )
-            ]),
+            bottom: TabBar(
+                indicatorColor: context.colors.primary,
+                labelColor: Colors.black,
+                unselectedLabelColor: Colors.grey,
+                tabs: const [
+                  Tab(text: "Detail"),
+                  Tab(
+                    text: "Diskusi",
+                  )
+                ]),
           ),
           body: TabBarView(children: [
             SingleChildScrollView(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Card(
+                  Card(
+                      borderOnForeground: true,
                       margin: EdgeInsets.all(20),
                       child: SizedBox(
                         height: 200,
                         width: double.infinity,
                         child: Center(
-                          child: Text(''),
+                          child: widget.url != ""
+                              ? Image.network(widget.url)
+                              : const Center(
+                                  child: Text('Tidak ada foto'),
+                                ),
                         ),
                       )),
                   const SizedBox(height: 5),
@@ -131,40 +159,45 @@ class _EventDetailState extends State<EventDetail> {
             ),
             Stack(
               children: <Widget>[
-                ListView.builder(
-                  itemCount: messages.length,
-                  shrinkWrap: true,
-                  padding: const EdgeInsets.only(top: 10, bottom: 10),
-                  itemBuilder: (context, index) {
-                    return SingleChildScrollView(
-                      child: Container(
-                        padding: const EdgeInsets.only(
-                            left: 14, right: 14, top: 10, bottom: 10),
-                        child: Align(
-                          alignment: (messages[index].messageType == "receiver"
-                              ? Alignment.topLeft
-                              : Alignment.topRight),
-                          child: Container(
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(20),
-                                color: context.colors.surfaceVariant),
-                            padding: const EdgeInsets.all(16),
-                            child: Text(
-                              messages[index].messageContent,
-                              style: context.bodyMedium
-                                  ?.copyWith(color: context.colors.onSurface),
+                StreamBuilder(
+                  stream: ref2!.snapshots(),
+                  builder: (BuildContext context,
+                      AsyncSnapshot<QuerySnapshot> snapshot) {
+                    if (snapshot.hasData) {
+                      return ListView.builder(
+                        itemCount: snapshot.data!.docs.length,
+                        shrinkWrap: true,
+                        //padding: const EdgeInsets.only(top: 10, bottom: 10),
+                        itemBuilder: (context, index) {
+                          return SingleChildScrollView(
+                            child: Container(
+                              padding: const EdgeInsets.only(top:10,bottom: 10,right: 10,left: 10),
+                              child: Container(
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(5),
+                                    color: context.colors.surfaceVariant),
+                                padding: const EdgeInsets.all(5),
+                                child: Text(
+                                  '${snapshot.data!.docs[index].get("chat")}',
+                                  style: context.bodyMedium?.copyWith(
+                                      color: context.colors.onSurface),
+                                ),
+                              ),
                             ),
-                          ),
-                        ),
-                      ),
-                    );
+                          );
+                        },
+                      );
+                    } else if (snapshot.hasError) {
+                      return const Center(child: CircularProgressIndicator());
+                    } else {
+                      return const Center(child: CircularProgressIndicator());
+                    }
                   },
                 ),
                 Align(
                   alignment: Alignment.bottomLeft,
                   child: Container(
-                    padding:
-                        const EdgeInsets.only(left: 10, bottom: 10, top: 10),
+                    padding: const EdgeInsets.only(top:5,right: 5,left: 5,bottom: 10),
                     height: 60,
                     width: double.infinity,
                     color: Colors.white,
@@ -177,10 +210,13 @@ class _EventDetailState extends State<EventDetail> {
                           child: TextField(
                             controller: chat,
                             decoration: InputDecoration(
-                                hintText: "Write message...",
+                                hintText: "Ketik pesan",
                                 hintStyle: context.bodySmall?.copyWith(
                                     color: context.colors.onBackground),
-                                border: InputBorder.none),
+                                border: const OutlineInputBorder(
+                                  borderSide:
+                                      BorderSide(color: Colors.black),
+                                )),
                           ),
                         ),
                         const SizedBox(
@@ -188,19 +224,18 @@ class _EventDetailState extends State<EventDetail> {
                         ),
                         FloatingActionButton(
                           onPressed: () {
-                            setState(() {
-                              var newChat = ChatMessage(
-                                  messageContent: chat.text,
-                                  messageType: "sender");
-                              messages.add(newChat);
-                              clearText();
-                            });
+                            Map<String, dynamic> addChat = {
+                              "chat": chat.text,
+                              "timeStamp":FieldValue.serverTimestamp()
+                            };
+                            ref!.add(addChat);
+                            chat.clear();
                           },
                           backgroundColor: Colors.white,
                           elevation: 0,
                           child: const Icon(
                             Icons.send,
-                            color: Colors.white,
+                            color: Colors.black,
                             size: 18,
                           ),
                         ),

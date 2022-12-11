@@ -29,7 +29,7 @@ class AppRouter {
             path: 'editProfile',
             name: 'editProfile',
             builder: (context, state) {
-              return EditProfilePage();
+              return const EditProfilePage();
             },
           ),
           GoRoute(

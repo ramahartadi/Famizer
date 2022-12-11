@@ -1,10 +1,13 @@
-import 'package:events/pages/list.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:events/model/event.dart';
 import 'package:theme/theme.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:firebase_storage/firebase_storage.dart';
+import 'dart:io';
 
 class EventEdit extends StatefulWidget {
+  final String url;
   final String id;
   final String name;
   final String desciption;
@@ -13,6 +16,7 @@ class EventEdit extends StatefulWidget {
   final String endTime;
   const EventEdit(
       {Key? key,
+      required this.url,
       required this.id,
       required this.name,
       required this.desciption,
@@ -27,6 +31,24 @@ class EventEdit extends StatefulWidget {
 }
 
 class _EventEditState extends State<EventEdit> {
+  String imageUpload = '';
+  void uploadImage() async {
+    final image = await ImagePicker().pickImage(
+      source: ImageSource.gallery,
+    );
+
+    Reference ref = FirebaseStorage.instance.ref().child("${widget.name}.jpg");
+
+    await ref.putFile(File(image!.path));
+
+    ref.getDownloadURL().then((value) async {
+      setState(() {
+        imageUpload = value;
+      });
+    });
+  }
+  DocumentReference? ref;
+
   TextEditingController nameController = TextEditingController();
   TextEditingController descriptionController = TextEditingController();
   TextEditingController dateController = TextEditingController();
@@ -37,6 +59,12 @@ class _EventEditState extends State<EventEdit> {
   @override
   void initState() {
     super.initState();
+    ref = FirebaseFirestore.instance
+        .collection("families")
+        .doc("qLyPcSCHfVJSj8W6QJXJ")
+        .collection("events")
+        .doc(widget.id);
+    imageUpload=widget.url;
     nameController.text = widget.name;
     descriptionController.text = widget.desciption;
     dateController.text = widget.date;
@@ -58,18 +86,18 @@ class _EventEditState extends State<EventEdit> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          iconTheme: IconThemeData(
-              color: Colors.black, //change your color here
-            ),
+          iconTheme: const IconThemeData(
+            color: Colors.black, //change your color here
+          ),
           title: const Text("Edit Kegiatan"),
           actions: <Widget>[
             IconButton(
               icon: const Icon(
                 Icons.done,
-                color: Colors.white,
+                color: Colors.black,
               ),
               onPressed: () async {
-                setState(() {
+                /*setState(() {
                   var eventEdit = Event(
                       widget.id,
                       nameController.text,
@@ -78,7 +106,16 @@ class _EventEditState extends State<EventEdit> {
                       timeStartController.text,
                       timeEndController.text);
                   eventList[eventList.indexWhere((element) => element.id == widget.id)] = eventEdit;
+                });*/
+                ref!.update({
+                  "url":imageUpload,
+                  "name": nameController.text,
+                  "description": descriptionController.text,
+                  "date": dateController.text,
+                  "timeStart": timeStartController.text,
+                  "timeEnd": timeEndController.text
                 });
+                Navigator.pop(context);
                 Navigator.pop(context);
               },
             )
@@ -89,16 +126,22 @@ class _EventEditState extends State<EventEdit> {
             children: [
               InkWell(
                 child: Card(
-                  color: context.colors.primaryContainer,
+                    color: context.colors.primaryContainer,
                     margin: const EdgeInsets.all(20),
-                    child: const SizedBox(
+                    child: SizedBox(
                       height: 200,
                       width: double.infinity,
                       child: Center(
-                        child: Text(''),
+                        child:  imageUpload != ""
+                            ? Image.network(imageUpload)
+                            : const Center(
+                                child: Text('Tidak ada foto'),
+                              ),
                       ),
                     )),
-                onTap: () {},
+                onTap: () {
+                  uploadImage();                  
+                },
               ),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -221,27 +264,26 @@ class _EventEditState extends State<EventEdit> {
               Container(
                 height: 60,
                 child: InkWell(
-                  onTap: () {
-                    setState(() {
-                      eventList.removeWhere((element) => element.id == widget.id);
-                    });
-                    Navigator.pop(context);
-                    Navigator.pop(context);
-                  },
-                  child: Padding(padding: const EdgeInsets.symmetric(horizontal: 20),
-                  child: Card(
-                    color: context.colors.primary,
-                    shape: const RoundedRectangleBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(32))),
-                    child: const Center(
-                      child: Text("Hapus kegiatan"),
-                    ),
-                  ),)
-                ),
+                    onTap: () {
+                     ref!.delete();                      
+                      Navigator.pop(context);
+                      Navigator.pop(context);
+                    },
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 20),
+                      child:  Card(
+                        color: context.colors.primary,
+                        shape: const RoundedRectangleBorder(
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(32))),
+                        child: const Center(
+                          child: Text("Hapus kegiatan",style: TextStyle(color: Colors.white),),
+                        ),
+                      ),                       
+                    )),
               )
             ],
           ),
         ));
   }
 }
-
