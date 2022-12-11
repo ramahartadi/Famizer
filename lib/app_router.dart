@@ -39,7 +39,8 @@ class AppRouter {
         path: '/login',
         name: 'login',
         builder: (context, state) {
-          return const TodoPage();
+          // return const ProfileRegistration();
+          return const LoginPage();
         },
         routes: [
           GoRoute(
@@ -89,8 +90,7 @@ class AppRouter {
     ],
     redirect: (context, state) {
       // check if the user is logged in.
-      late bool loggedIn =
-          appBloc.state.status == AppStatus.authenticated; // cubit
+      late bool loggedIn = appBloc.state.status == AppStatus.authenticated;
       // check if the user is logging in
 
       // check current current location

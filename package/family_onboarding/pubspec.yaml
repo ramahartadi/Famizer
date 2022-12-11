@@ -15,6 +15,7 @@ dependencies:
     path: ../theme 
   
   form_builder_validators: ^8.4.0
+  cloud_firestore: ^4.2.0
 
 dev_dependencies:
   flutter_test:
