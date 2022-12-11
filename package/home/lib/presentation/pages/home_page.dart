@@ -43,8 +43,7 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
+    return Scaffold(
         backgroundColor: context.colors.background,
         body: Builder(builder: (context) {
           return SingleChildScrollView(
@@ -120,30 +119,24 @@ class _HomePageState extends State<HomePage> {
                                     debugPrint('kegiatan mendatang Tapped.');
                                   },
                                   child: SizedBox(
-                                    width: 360,
+                                    width: 400,
                                     height: 150,
                                     child: Container(
                                         child: Row(
                                       children: [
                                         Padding(
                                           padding: const EdgeInsets.all(16),
-                                          child: StreamBuilder(
-                                              stream:
-                                                  eventReference.snapshots(),
-                                              builder: (BuildContext context,
-                                                  AsyncSnapshot<QuerySnapshot>
-                                                      snapshot) {
-                                                if (snapshot.hasData) {
-                                                  return Column(
+                                          child: Column(
                                                     crossAxisAlignment:
                                                         CrossAxisAlignment
-                                                            .start,
+                                                            .center,
+                                                            mainAxisAlignment: MainAxisAlignment.center,
                                                     children: [
                                                       const SizedBox(
                                                         height: 10,
                                                       ),
                                                       Text(
-                                                        'Kegiatan mendatang',
+                                                        'Keluarga Bahagia',
                                                         style: context
                                                             .titleLarge
                                                             ?.copyWith(
@@ -153,55 +146,10 @@ class _HomePageState extends State<HomePage> {
                                                         textAlign:
                                                             TextAlign.left,
                                                       ),
-                                                      const SizedBox(
-                                                        height: 20,
-                                                      ),
-                                                      Text(
-                                                        snapshot.data!.docs[0]
-                                                            .get('name'),
-                                                        style: context
-                                                            .titleMedium
-                                                            ?.copyWith(
-                                                                color: context
-                                                                    .colors
-                                                                    .onPrimaryContainer),
-                                                        textAlign:
-                                                            TextAlign.left,
-                                                      ),
-                                                      Row(
-                                                        children: [
-                                                          SvgPicture.asset(
-                                                            'assets/icon/schedule.svg',
-                                                            package: 'home',
-                                                          ),
-                                                          Text(
-                                                            snapshot
-                                                                .data!.docs[0]
-                                                                .get('date'),
-                                                            style: context
-                                                                .bodySmall
-                                                                ?.copyWith(
-                                                                    color: context
-                                                                        .colors
-                                                                        .onSurfaceVariant),
-                                                          ),
-                                                          Text(
-                                                            '  ${snapshot.data!.docs[0].get('timeStart')} - ${snapshot.data!.docs[0].get('timeEnd')}',
-                                                            style: context
-                                                                .bodySmall
-                                                                ?.copyWith(
-                                                                    color: context
-                                                                        .colors
-                                                                        .onSurfaceVariant),
-                                                          ),
-                                                        ],
-                                                      ),
-                                                    ],
-                                                  );
-                                                } else {
-                                                  return CircularProgressIndicator();
-                                                }
-                                              }),
+                                                      
+                                                      ],
+                                                  ),
+                                             
                                         ),
                                         Expanded(
                                           child: Row(
@@ -365,7 +313,7 @@ class _HomePageState extends State<HomePage> {
             ),
           );
         }),
-      ),
-    );
+      );
+    
   }
 }

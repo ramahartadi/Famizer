@@ -40,7 +40,7 @@ class _TodoDetailState extends State<TodoDetailPage> {
         setState(() {
           data = snapshot.data() as Map<String, dynamic>?;
           name = data?["name"];
-          print("name" + name!);
+          print("name" + name);
         });
       },
     );
@@ -56,7 +56,7 @@ class _TodoDetailState extends State<TodoDetailPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(name!),
+        title: Text(name),
         actions: [
           IconButton(
             onPressed: () {
