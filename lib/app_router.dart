@@ -39,7 +39,6 @@ class AppRouter {
         path: '/login',
         name: 'login',
         builder: (context, state) {
-          // return const ProfileRegistration();
           return const LoginPage();
         },
         routes: [
