@@ -1,9 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:theme/theme.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import '../../model/user.dart';
+import 'package:authentication/authentication.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -16,16 +17,25 @@ class _HomePageState extends State<HomePage> {
   dynamic data;
   String? nama;
   String? status;
+  FirebaseAuth firebaseAuth = FirebaseAuth.instance;
+  late User? userAuth = firebaseAuth.currentUser;
+  late String? uid = userAuth?.uid;
 
   CollectionReference userReference =
       FirebaseFirestore.instance.collection('users');
 
-  DocumentReference user = FirebaseFirestore.instance
-      .collection('users')
-      .doc('lJX6X15kk3wHXX13gcYK');
+  late DocumentReference userDoc =
+      FirebaseFirestore.instance.collection('users').doc(uid);
 
   CollectionReference FamiliesReference =
       FirebaseFirestore.instance.collection('families');
+
+  Query eventReference = FirebaseFirestore.instance
+      .collection('families')
+      .doc('qLyPcSCHfVJSj8W6QJXJ')
+      .collection('events')
+      .orderBy('date')
+      .limit(1);
 
   DocumentReference family = FirebaseFirestore.instance
       .collection('families')
@@ -39,12 +49,12 @@ class _HomePageState extends State<HomePage> {
         body: Builder(builder: (context) {
           return SingleChildScrollView(
             child: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
+              padding: const EdgeInsets.only(left: 16, right: 16, top: 32),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: <Widget>[
                   StreamBuilder(
-                    stream: user.snapshots(),
+                    stream: userDoc.snapshots(),
                     builder: (BuildContext context,
                         AsyncSnapshot<DocumentSnapshot> snapshot) {
                       if (snapshot.hasData) {
@@ -117,55 +127,81 @@ class _HomePageState extends State<HomePage> {
                                       children: [
                                         Padding(
                                           padding: const EdgeInsets.all(16),
-                                          child: Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              Text(
-                                                'Kegiatan mendatang',
-                                                style: context.titleLarge
-                                                    ?.copyWith(
-                                                        color: context.colors
-                                                            .onPrimaryContainer),
-                                                textAlign: TextAlign.left,
-                                              ),
-                                              const SizedBox(
-                                                height: 20,
-                                              ),
-                                              Text(
-                                                'Family trip',
-                                                style: context.titleMedium
-                                                    ?.copyWith(
-                                                        color: context.colors
-                                                            .onPrimaryContainer),
-                                                textAlign: TextAlign.left,
-                                              ),
-                                              Row(
-                                                children: [
-                                                  SvgPicture.asset(
-                                                    'assets/icon/schedule.svg',
-                                                    package: 'home',
-                                                  ),
-                                                  Text(
-                                                    ' 20 November 2022',
-                                                    style: context.bodySmall
-                                                        ?.copyWith(
-                                                            color: context
-                                                                .colors
-                                                                .onSurfaceVariant),
-                                                  ),
-                                                  Text(
-                                                    '. 10:00 - 13:10',
-                                                    style: context.bodySmall
-                                                        ?.copyWith(
-                                                            color: context
-                                                                .colors
-                                                                .onSurfaceVariant),
-                                                  ),
-                                                ],
-                                              ),
-                                            ],
-                                          ),
+                                          child: StreamBuilder(
+                                              stream:
+                                                  eventReference.snapshots(),
+                                              builder: (BuildContext context,
+                                                  AsyncSnapshot<QuerySnapshot>
+                                                      snapshot) {
+                                                if (snapshot.hasData) {
+                                                  return Column(
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .start,
+                                                    children: [
+                                                      const SizedBox(
+                                                        height: 10,
+                                                      ),
+                                                      Text(
+                                                        'Kegiatan mendatang',
+                                                        style: context
+                                                            .titleLarge
+                                                            ?.copyWith(
+                                                                color: context
+                                                                    .colors
+                                                                    .onPrimaryContainer),
+                                                        textAlign:
+                                                            TextAlign.left,
+                                                      ),
+                                                      const SizedBox(
+                                                        height: 20,
+                                                      ),
+                                                      Text(
+                                                        snapshot.data!.docs[0]
+                                                            .get('name'),
+                                                        style: context
+                                                            .titleMedium
+                                                            ?.copyWith(
+                                                                color: context
+                                                                    .colors
+                                                                    .onPrimaryContainer),
+                                                        textAlign:
+                                                            TextAlign.left,
+                                                      ),
+                                                      Row(
+                                                        children: [
+                                                          SvgPicture.asset(
+                                                            'assets/icon/schedule.svg',
+                                                            package: 'home',
+                                                          ),
+                                                          Text(
+                                                            snapshot
+                                                                .data!.docs[0]
+                                                                .get('date'),
+                                                            style: context
+                                                                .bodySmall
+                                                                ?.copyWith(
+                                                                    color: context
+                                                                        .colors
+                                                                        .onSurfaceVariant),
+                                                          ),
+                                                          Text(
+                                                            '  ${snapshot.data!.docs[0].get('timeStart')} - ${snapshot.data!.docs[0].get('timeEnd')}',
+                                                            style: context
+                                                                .bodySmall
+                                                                ?.copyWith(
+                                                                    color: context
+                                                                        .colors
+                                                                        .onSurfaceVariant),
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    ],
+                                                  );
+                                                } else {
+                                                  return CircularProgressIndicator();
+                                                }
+                                              }),
                                         ),
                                         Expanded(
                                           child: Row(
@@ -211,12 +247,12 @@ class _HomePageState extends State<HomePage> {
                               debugPrint('Daftar tugas Tapped.');
                             },
                             child: SizedBox(
-                              height: 150,
+                              height: 110,
                               child: Container(
                                   padding: const EdgeInsets.all(16),
                                   child: Column(
                                     crossAxisAlignment:
-                                        CrossAxisAlignment.start,
+                                        CrossAxisAlignment.center,
                                     children: [
                                       Icon(
                                         Icons.checklist,
@@ -230,58 +266,6 @@ class _HomePageState extends State<HomePage> {
                                         'Daftar tugas',
                                         style: context.titleMedium?.copyWith(
                                             color: context.colors.onBackground),
-                                      ),
-                                      Text(
-                                        '2 daftar',
-                                        style: context.bodySmall?.copyWith(
-                                            color: context
-                                                .colors.onSurfaceVariant),
-                                      ),
-                                    ],
-                                  )),
-                            ),
-                          ),
-                        ),
-                      ),
-                      const SizedBox(
-                        width: 15,
-                      ),
-                      Expanded(
-                        child: Card(
-                          color: context.colors.surfaceVariant,
-                          margin: EdgeInsets.zero,
-                          child: InkWell(
-                            splashColor: context.colors.surfaceVariant,
-                            onTap: () {
-                              context.pushNamed('calendar');
-                              debugPrint('Kalender Tapped.');
-                            },
-                            child: SizedBox(
-                              height: 150,
-                              child: Container(
-                                  padding: const EdgeInsets.all(16),
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Icon(
-                                        Icons.calendar_month,
-                                        size: 36,
-                                        color: context.colors.primary,
-                                      ),
-                                      const SizedBox(
-                                        height: 18,
-                                      ),
-                                      Text(
-                                        'Kalender',
-                                        style: context.titleMedium?.copyWith(
-                                            color: context.colors.onBackground),
-                                      ),
-                                      Text(
-                                        '10 kegiatan bulan ini',
-                                        style: context.bodySmall?.copyWith(
-                                            color: context
-                                                .colors.onSurfaceVariant),
                                       ),
                                     ],
                                   )),
@@ -311,7 +295,8 @@ class _HomePageState extends State<HomePage> {
                                   padding: const EdgeInsets.all(16),
                                   child: Column(
                                     crossAxisAlignment:
-                                        CrossAxisAlignment.start,
+                                        CrossAxisAlignment.center,
+                                    mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
                                       Icon(
                                         Icons.event_note,
@@ -325,12 +310,6 @@ class _HomePageState extends State<HomePage> {
                                         'Kegiatan',
                                         style: context.titleMedium?.copyWith(
                                             color: context.colors.onBackground),
-                                      ),
-                                      Text(
-                                        '10 kegiatan',
-                                        style: context.bodySmall?.copyWith(
-                                            color: context
-                                                .colors.onSurfaceVariant),
                                       ),
                                     ],
                                   )),
@@ -357,7 +336,8 @@ class _HomePageState extends State<HomePage> {
                                   padding: const EdgeInsets.all(16),
                                   child: Column(
                                     crossAxisAlignment:
-                                        CrossAxisAlignment.start,
+                                        CrossAxisAlignment.center,
+                                    mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
                                       Icon(
                                         Icons.house_outlined,
@@ -368,15 +348,9 @@ class _HomePageState extends State<HomePage> {
                                         height: 18,
                                       ),
                                       Text(
-                                        'Keluarga Ahmad',
+                                        'Anggota Keluarga',
                                         style: context.titleMedium?.copyWith(
                                             color: context.colors.onBackground),
-                                      ),
-                                      Text(
-                                        '6 orang',
-                                        style: context.bodySmall?.copyWith(
-                                            color: context
-                                                .colors.onSurfaceVariant),
                                       ),
                                     ],
                                   )),

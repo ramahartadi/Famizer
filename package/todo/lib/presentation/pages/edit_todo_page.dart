@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:theme/theme.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:go_router/go_router.dart';
 
 class EditTodoPage extends StatefulWidget {
   final String Id;
@@ -103,6 +104,7 @@ class _EditTodoPageState extends State<EditTodoPage> {
                   });
                 });
                 Navigator.pop(context);
+                Navigator.pop(context);
               },
               icon: const Icon(Icons.check))
         ],
@@ -125,7 +127,9 @@ class _EditTodoPageState extends State<EditTodoPage> {
                   color: context.colors.onSurfaceVariant,
                 ),
                 tooltip: 'Delete',
-                onPressed: () {},
+                onPressed: () {
+                  _namaTugasController.clear();
+                },
               ),
             ),
           ),
@@ -144,101 +148,10 @@ class _EditTodoPageState extends State<EditTodoPage> {
                   color: context.colors.onSurfaceVariant,
                 ),
                 tooltip: 'Delete',
-                onPressed: () {},
+                onPressed: () {
+                  _deskripsiTugasController.clear();
+                },
               ),
-            ),
-          ),
-          const SizedBox(
-            height: 20,
-          ),
-          Card(
-            child: ListTile(
-              title: const Text('Terlihat untuk:'),
-              subtitle: const Text('Here is a second line'),
-              onTap: () {
-                showModalBottomSheet(
-                    shape: const RoundedRectangleBorder(
-                      borderRadius: BorderRadius.only(
-                          topRight: Radius.circular(28),
-                          topLeft: Radius.circular(28)),
-                    ),
-                    context: context,
-                    builder: (BuildContext context) {
-                      return Container(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            const SizedBox(
-                              width: double.infinity,
-                              child: Icon(Icons.drag_handle),
-                            ),
-                            const Padding(
-                              padding: EdgeInsets.all(16.0),
-                              child: Text('Siapa yang bisa melihat list ini?'),
-                            ),
-                            const ListTile(
-                              leading: Icon(Icons.lock_outline),
-                              title: Text('Hanya saya'),
-                            ),
-                            const ListTile(
-                              leading: Icon(Icons.group_outlined),
-                              title: Text('Semua orang di keluarga ini'),
-                            ),
-                            ListTile(
-                              leading: const Icon(Icons.group_add_outlined),
-                              title: const Text('Anggota spesifik'),
-                              onTap: () => {
-                                Navigator.pop(context),
-                                showModalBottomSheet(
-                                    shape: const RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.only(
-                                          topRight: Radius.circular(28),
-                                          topLeft: Radius.circular(28)),
-                                    ),
-                                    context: context,
-                                    builder: (BuildContext context) {
-                                      return Container(
-                                        child: Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          mainAxisSize: MainAxisSize.min,
-                                          children: const [
-                                            SizedBox(
-                                              width: double.infinity,
-                                              child: Icon(Icons.drag_handle),
-                                            ),
-                                            Padding(
-                                              padding: EdgeInsets.all(16.0),
-                                              child: Text('Pilih Anggota'),
-                                            ),
-                                            ListTile(
-                                              leading: FlutterLogo(),
-                                              title: Text('Ahmad'),
-                                              trailing: Icon(Icons.add),
-                                            ),
-                                            ListTile(
-                                              leading: FlutterLogo(),
-                                              title: Text('Fathur'),
-                                              trailing: Icon(Icons.close),
-                                            ),
-                                            SizedBox(
-                                              height: 52,
-                                            )
-                                          ],
-                                        ),
-                                      );
-                                    })
-                              },
-                            ),
-                            const SizedBox(
-                              height: 52,
-                            )
-                          ],
-                        ),
-                      );
-                    });
-              },
             ),
           ),
           const SizedBox(
@@ -271,7 +184,7 @@ class _EditTodoPageState extends State<EditTodoPage> {
                           TextButton(
                             onPressed: () {
                               setState((() {
-                                // listTugas.removeAt(widget.index);
+                                collectionReference.doc(Id).delete();
                               }));
                               Navigator.pop(context, 'OK');
                               Navigator.pop(context);

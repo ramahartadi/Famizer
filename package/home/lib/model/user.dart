@@ -1,11 +1,11 @@
-class User {
+class UserModel {
   final String? id;
   final String? name;
   final String? birthday;
   final String? status;
   final String? mood;
 
-  User(
+  UserModel(
       {required this.id,
       required this.name,
       required this.status,
@@ -20,7 +20,7 @@ class User {
         'mood': mood,
       };
 
-  static User fromJson(Map<String, dynamic> json) => User(
+  static UserModel fromJson(Map<String, dynamic> json) => UserModel(
       id: json['id'],
       name: json['name'],
       status: json['status'],
@@ -28,7 +28,7 @@ class User {
       mood: json['mood']);
 }
 
-var userProfile = User(
+var userProfile = UserModel(
   id: '01',
   name: 'Ahmad',
   status: 'Sedang sibuk',

@@ -1,13 +1,14 @@
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
-import 'package:home/model/user.dart';
-import 'package:image_cropper/image_cropper.dart';
 import 'package:theme/theme.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:intl/intl.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:go_router/go_router.dart';
 import 'dart:io';
+import '../../model/user.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 enum MoodUser { SangatSenang, Senang, BiasaSaja, TidakSenang, Sakit }
 
@@ -23,16 +24,23 @@ class _EditProfilePageState extends State<EditProfilePage> {
   TextEditingController dateController = TextEditingController();
   TextEditingController statusController = TextEditingController();
 
+  FirebaseAuth firebaseAuth = FirebaseAuth.instance;
+  late User? userAuth = firebaseAuth.currentUser;
+  late String? uid = userAuth?.uid;
+
   String profilePicLink = "";
 
   dynamic data;
 
-  String? userId = 'lJX6X15kk3wHXX13gcYK';
+  late String? userId = uid;
 
   CollectionReference collectionReference =
       FirebaseFirestore.instance.collection('users');
 
-  void updateUserData(User user) async {
+  late CollectionReference user =
+      FirebaseFirestore.instance.collection('users');
+
+  void updateUserData(UserModel user) async {
     collectionReference.doc(userId).update({
       'name': user.name,
       'birthday': user.birthday,
@@ -78,14 +86,14 @@ class _EditProfilePageState extends State<EditProfilePage> {
   }
 
   saveProfile() async {
-    User user = User(
+    UserModel user = UserModel(
         id: userProfile.id,
         name: nameController.text,
         status: statusController.text,
         birthday: dateController.text);
 
     updateUserData(user);
-    Navigator.pop(context);
+    context.goNamed('home');
   }
 
   @override
@@ -106,15 +114,6 @@ class _EditProfilePageState extends State<EditProfilePage> {
             IconButton(
               icon: Icon(Icons.check),
               onPressed: () {
-                // setState(() {
-                //   var userEdit = User(
-                //       id: userProfile.id,
-                //       name: nameController.text,
-                //       status: statusController.text,
-                //       birthday: dateController.text,
-                //       mood: moodController.text);
-                //   userProfile = userEdit;
-                // });
                 saveProfile();
               },
             ),
