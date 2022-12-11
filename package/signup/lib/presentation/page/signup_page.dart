@@ -1,4 +1,5 @@
 import 'package:authentication/presentation/cubits/signup/signup_cubit.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -200,23 +201,30 @@ class _SignupPageState extends State<SignupPage> {
                                       style: TextStyle(
                                           color: context.colors.onPrimary),
                                     ),
-                                    onPressed: () {
+                                    onPressed: () async {
                                       final bool isValid =
                                           formKey.currentState!.validate();
-                                      print(isValid);
                                       if (!isValid) return;
-                                      context
-                                          .read<SignupCubit>()
-                                          .signupFormSubmitted();
-                                      if (state.status ==
-                                          SignupStatus.success) {
-                                        context.goNamed('profileRegistration');
-                                      } else {
+                                      try {
+                                        await context
+                                            .read<SignupCubit>()
+                                            .signupFormSubmitted();
+                                        Future.delayed(
+                                          const Duration(seconds: 1),
+                                          () {
+                                            context
+                                                .goNamed('profileRegistration');
+                                          },
+                                        );
+                                      } on FirebaseAuthException catch (e) {
                                         ScaffoldMessenger.of(context)
-                                            .showSnackBar(const SnackBar(
-                                          content:
-                                              Text('Terjadi suatu kesalahan'),
-                                        ));
+                                            .showSnackBar(
+                                          SnackBar(
+                                            content: Text(
+                                              e.toString(),
+                                            ),
+                                          ),
+                                        );
                                       }
                                     },
                                   );
