@@ -6,6 +6,8 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:theme/theme.dart';
 import 'package:about/about.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class SettingPage extends StatefulWidget {
   const SettingPage({super.key});
@@ -15,6 +17,44 @@ class SettingPage extends StatefulWidget {
 }
 
 class _SettingPageState extends State<SettingPage> {
+  FirebaseAuth firebaseAuth = FirebaseAuth.instance;
+  late User? userAuth = firebaseAuth.currentUser;
+  late String? uid = userAuth?.uid;
+  late String? userId = uid;
+
+  dynamic data;
+
+  String? nameUser = "";
+  String? emailUser = "";
+  String? profilePicLink = "";
+
+  late DocumentReference userDoc =
+      FirebaseFirestore.instance.collection('users').doc(uid);
+
+  CollectionReference collectionReference =
+      FirebaseFirestore.instance.collection('users');
+
+  Future<dynamic> getData() async {
+    final DocumentReference document = collectionReference.doc(userId);
+    await document.get().then<dynamic>(
+      (DocumentSnapshot snapshot) {
+        setState(() {
+          data = snapshot.data() as Map<String, dynamic>?;
+          nameUser = data?["name"];
+          emailUser = data?["email"];
+          profilePicLink = data?["imageUrl"];
+        });
+      },
+    );
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    getData();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -33,24 +73,26 @@ class _SettingPageState extends State<SettingPage> {
                 CircleAvatar(
                   backgroundColor: context.colors.primaryContainer,
                   radius: 50,
-                  child: SvgPicture.asset(
-                    'assets/avatar_placeholder.svg',
-                    package: 'settings',
-                    color: context.colors.onPrimaryContainer,
-                  ),
+                  child: profilePicLink == ""
+                      ? SvgPicture.asset(
+                          'assets/avatar_placeholder.svg',
+                          package: 'settings',
+                          color: context.colors.onPrimaryContainer,
+                        )
+                      : ClipOval(child: Image.network(profilePicLink!)),
                 ),
                 const SizedBox(width: 20),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Ahmad',
+                      nameUser!,
                       style: context.titleLarge?.copyWith(
                         color: context.colors.onBackground,
                       ),
                     ),
                     Text(
-                      'ahmad@gmail.com',
+                      emailUser!,
                       style: context.bodyMedium?.copyWith(
                         color: context.colors.onBackground,
                       ),
@@ -64,7 +106,7 @@ class _SettingPageState extends State<SettingPage> {
                           ),
                           recognizer: TapGestureRecognizer()
                             ..onTap = (() {
-                              context.pushNamed('editProfile');
+                              context.goNamed('editProfile');
                             })),
                     )
                   ],
