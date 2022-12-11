@@ -26,6 +26,7 @@ dependencies:
     image_cropper: ^3.0.1
     firebase_auth: ^4.2.0
 
+
 dev_dependencies:
     flutter_test:
         sdk: flutter
