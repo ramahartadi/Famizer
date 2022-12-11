@@ -44,13 +44,30 @@ class _HomePageState extends State<HomePage> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: <Widget>[
                   StreamBuilder(
-                    stream: user!.snapshots(),
+                    stream: user.snapshots(),
                     builder: (BuildContext context,
                         AsyncSnapshot<DocumentSnapshot> snapshot) {
                       if (snapshot.hasData) {
                         return Container(
                           child: ListTile(
-                              leading: const FlutterLogo(size: 40),
+                              leading: CircleAvatar(
+                                backgroundColor:
+                                    context.colors.primaryContainer,
+                                radius: 30,
+                                child: snapshot.data!['imageUrl'] == ""
+                                    ? SvgPicture.asset(
+                                        'assets/image/avatar_placeholder.svg',
+                                        package: 'home',
+                                        color:
+                                            context.colors.onPrimaryContainer,
+                                      )
+                                    : ClipOval(
+                                        child: Image.network(
+                                          snapshot.data!['imageUrl'],
+                                          fit: BoxFit.fitWidth,
+                                        ),
+                                      ),
+                              ),
                               title: Text(
                                 '${snapshot.data!['name']}',
                                 style: context.titleSmall?.copyWith(
@@ -76,7 +93,7 @@ class _HomePageState extends State<HomePage> {
                       }
                     },
                   ),
-                  const SizedBox(height: 20),
+                  const SizedBox(height: 60),
                   StreamBuilder(
                       stream: family.snapshots(),
                       builder: (BuildContext context,

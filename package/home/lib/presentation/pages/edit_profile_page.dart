@@ -1,9 +1,13 @@
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:home/model/user.dart';
+import 'package:image_cropper/image_cropper.dart';
 import 'package:theme/theme.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:intl/intl.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:image_picker/image_picker.dart';
+import 'dart:io';
 
 enum MoodUser { SangatSenang, Senang, BiasaSaja, TidakSenang, Sakit }
 
@@ -19,23 +23,46 @@ class _EditProfilePageState extends State<EditProfilePage> {
   TextEditingController dateController = TextEditingController();
   TextEditingController statusController = TextEditingController();
 
+  String profilePicLink = "";
+
   dynamic data;
+
+  String? userId = 'lJX6X15kk3wHXX13gcYK';
 
   CollectionReference collectionReference =
       FirebaseFirestore.instance.collection('users');
 
   void updateUserData(User user) async {
-    collectionReference.doc('lJX6X15kk3wHXX13gcYK').update({
+    collectionReference.doc(userId).update({
       'name': user.name,
       'birthday': user.birthday,
       'status': user.status,
       'mood': user.mood,
+      'imageUrl': profilePicLink
     });
   }
 
+  Future pickUploadImage() async {
+    final image = await ImagePicker().pickImage(
+      source: ImageSource.gallery,
+      maxHeight: 512,
+      maxWidth: 512,
+      imageQuality: 75,
+    );
+    if (image != null) {
+      Reference ref = FirebaseStorage.instance.ref().child('profilepic.jpg');
+
+      await ref.putFile(File(image!.path));
+      ref.getDownloadURL().then((value) {
+        setState(() {
+          profilePicLink = value;
+        });
+      });
+    }
+  }
+
   Future<dynamic> getData() async {
-    final DocumentReference document =
-        collectionReference.doc('lJX6X15kk3wHXX13gcYK');
+    final DocumentReference document = collectionReference.doc(userId);
     await document.get().then<dynamic>(
       (DocumentSnapshot snapshot) {
         setState(() {
@@ -44,6 +71,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
           moodController.text = data?["mood"];
           dateController.text = data?["birthday"];
           statusController.text = data?["status"];
+          profilePicLink = data["imageUrl"];
         });
       },
     );
@@ -95,26 +123,31 @@ class _EditProfilePageState extends State<EditProfilePage> {
         body: Container(
           margin: const EdgeInsets.symmetric(horizontal: 16),
           child: Column(children: [
-            SizedBox(
+            const SizedBox(
               height: 20,
             ),
             Stack(
               children: [
                 CircleAvatar(
+                  backgroundColor: context.colors.primaryContainer,
                   radius: 50,
-                  backgroundImage: AssetImage(
-                    'assets/image/Userimage.jpg',
-                    package: 'home',
-                  ),
+                  child: profilePicLink == ""
+                      ? SvgPicture.asset(
+                          'assets/image/avatar_placeholder.svg',
+                          package: 'home',
+                          color: context.colors.onPrimaryContainer,
+                        )
+                      : ClipOval(child: Image.network(profilePicLink)),
                 ),
                 Positioned(
                     top: 0,
                     right: 0,
                     child: InkWell(
                       onTap: () {
-                        showModalBottomSheet(
-                            context: context,
-                            builder: ((builder) => bottomsheet()));
+                        pickUploadImage();
+                        // showModalBottomSheet(
+                        //     context: context,
+                        //     builder: ((builder) => bottomsheet()));
                       },
                       child: Container(
                         padding: const EdgeInsets.all(6),
